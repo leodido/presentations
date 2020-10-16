@@ -46,3 +46,82 @@ footer: [@leodido](https://twitter.com/leodido)
 
 ![inline](assets/img/falco-timeline.svg)
 
+---
+
+![left](assets/img/bg1.jpg)
+# Contents
+
+* Rationale
+* Falco
+   * How does it work?
+   * What's runtime security?
+* Bypass!
+   * /honk
+
+[.hide-footer: true]
+[.slidenumbers: false]
+
+---
+
+![fit](assets/img/bg2.jpg)
+
+> You gonna get fired for this.
+> It's a mistake.
+-- my father.
+
+---
+
+![original filtered](assets/img/bg3.jpg)
+
+> other quote
+-- other author.
+
+---
+
+### Security
+
+# [fit] Prevention + Detection
+
+[.column]
+Use **policies** to _change the behavior_ of a process by preventing syscalls from succeeding (also killing the process).
+
+![inline](assets/img/selinux.svg) ![inline](assets/img/apparmor.svg) ![inline](assets/img/kubernetes.png)
+
+[.column]
+Use **policies**  to _monitor the behavior_ of a process and notify when its behavior steps outside the policy.
+
+![inline](assets/img/falco-logo-only.png)
+
+[.autoscale: false]
+
+---
+
+# [fit] Prevention is not enough.
+#### Combine with runtime detection tools. Use a [defense-in-depth](https://en.wikipedia.org/wiki/Defense_in_depth_(computing) :link: strategy.
+
+![inline fit](assets/img/cloudnativearch.svg)
+
+---
+
+![right filtered](assets/img/kelly.jpg)
+
+# [fit] Runtime Security
+
+She’s **Kelly**. :broken_heart:
+
+I have a lock on my front door and an alarm. She alerts me when things aren’t going right, when little bro is misbehaving or if there’s someone suspicious outside or nearby.
+
+She detects **runtime anomalies** in my life at home.
+
+**Still...** Bad people were able to defy her and break into my house.
+
+---
+
+<br>
+<br>
+# [fit] There is no such thing
+# [fit] as perfect security.
+
+---
+
+# Thanks and Honks
