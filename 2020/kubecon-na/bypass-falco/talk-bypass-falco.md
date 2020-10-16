@@ -40,3 +40,9 @@ footer: [@leodido](https://twitter.com/leodido)
 [.hide-footer: true]
 [.slidenumbers: false]
 
+---
+
+## A timeline always works fine
+
+![inline](assets/img/falco-timeline.svg)
+
