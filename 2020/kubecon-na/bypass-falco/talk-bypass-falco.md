@@ -53,8 +53,8 @@ footer: [@leodido](https://twitter.com/leodido)
 
 * Rationale
 * Falco
-   * How does it work?
    * What's runtime security?
+   * How does it work?
 * Bypass!
    * /honk
 
@@ -124,4 +124,73 @@ She detects **runtime anomalies** in my life at home.
 
 ---
 
-# Thanks and Honks
+# ...
+
+---
+
+# ...
+
+---
+
+# Categories
+
+---
+
+# Override binaries
+
+
+```yaml
+rule: ...
+```
+
+---
+
+## Demo
+
+...
+
+---
+
+# Mitigation
+
+---
+
+# Missing renameat2
+
+---
+
+# Missing excecveat
+
+---
+
+# Mitigations
+
+---
+
+
+
+---
+
+# ...
+
+---
+
+![](assets/img/bg4.jpg)
+
+# [fit] Thanks and Honks!
+### [fit] Does anyone have any questions?
+
+![inline 60%](assets/img/kubecon2020na.png)
+
+[.column]
+* [twitter.com/leodido](https://twitter.com/leodido)
+* [gh:leodido](https://github.com/leodido)
+* [gh:falcosecurity/falco](https://github.com/falcosecurity/falco)
+* [slack.k8s.io](https://slack.k8s.io), #falco channel
+
+[.column]
+![inline](assets/img/handwaving.png)
+
+[.build-lists: false]
+[.hide-footer: true]
+[.slidenumbers: false]
