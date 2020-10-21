@@ -24,7 +24,7 @@ footer: [@leodido](https://twitter.com/leodido)
 
 ^ Welcome to this cheeky new talk!
 
-^ It can sound strange, but the goal of this talk is to share with you all the findings of an experiment:  finding new ways to bypass a CNCF cool tool called Falco.
+^ It can sound strange, but the goal of this talk is to share with you all the findings of an experiment: finding new ways to bypass a CNCF cool tool called Falco.
 
 ^ Falco is a runtime security project and, I should add, I’m one of its authors
 
@@ -225,19 +225,19 @@ She detects **runtime anomalies** in my life at home.
 ^ So, what’s runtime security?
 
 ^ With this term, I refer to the practice of using detection tooling to detect unwanted behavior, such that it can then be prevented using prevention techniques.
-So to continuously improve your threat model and consequently the security posture of your systems.
+So to continuously improve your threat model.
 
 ^ It’s the last line of defense.
 
 ^ This means that in case it’s not able to promptly detect and alert you of malicious attempts you will end up like sitting ducks, defenseless.
 
-^ Let’s try with a metaphor. It’s simpler...
+^ Let’s try with a metaphor.
 
 ^ She’s Kelly. Look how beautiful she was...
-^ I have locks on my door and also an alarm (think of them as compliance rules), but she alerts me when things aren’t going right (policy violations), when little bro is misbehaving (think of him like a compromised insider) or if there’s something suspicious happening outside or nearby (anomaly or zero-day).
+I have locks on my door and also an alarm (think of them as compliance rules), but she alerts me when things aren’t going right (policy violations), when little bro is misbehaving (think of him like a compromised insider) or if there’s something suspicious happening outside or nearby (anomaly or zero-day).
 
 ^ She detects runtime anomalies in my life at home.
-^ And she was - may she rest in peace - very serious about her job. As you can see in the picture.
+And she was - may she rest in peace - very serious about her job. As you can see in the picture.
 
 ^ So while prevention is about locking the doors, detection is about continuously monitoring the inside and the perimeter.
 
@@ -251,6 +251,7 @@ So to continuously improve your threat model and consequently the security postu
 
 <br>
 <br>
+
 # [fit] There is no such thing
 # [fit] as perfect security.
 
@@ -423,13 +424,21 @@ Falco rules proven to be very straightforward to adopt, unlike the policy langua
 
 ^ The first thing that catches my eye here is the “spawned\_process” macro that only checks for the “execve” event. This syscall is part of the "exec" family. It executes a program referred to by the pathname given to it as the first argument. But “execve” has siblings in this family…
 
+^ Let’s see if we can circumvent this rule to trigger by using a brother or a sister of the “execve” syscall…
+
 ---
+
+![](assets/img/bg3.jpg)
 
 # execveat
 
-### video
+## [demo](http://bit.ly/bypass-falco-execveat-kubecon)
 
-^ Let’s see if we can circumvent this rule to trigger by using a brother or a sister of the “execve” syscall…
+![inline right](https://youtu.be/vjNbm_H_F_k)
+
+^ Ready? Demo time!
+
+^ VIDEO
 
 ---
 
@@ -523,10 +532,17 @@ Join us and we'll do our best to ease your first contribution!
 
 ---
 
-## [fit] Let's do it again
-## [fit] but in a different way
+![](assets/img/bg7.jpg)
 
-### video
+# Let's do it again
+
+## [demo](http://bit.ly/bypass-falco-packagemanager-in-container-kubecon)
+
+![inline left](https://youtu.be/iDcYR3BJtPU)
+
+^ Let's bypass a Falco rule again now! But differently this time...
+
+^ VIDEO
 
 ---
 
@@ -534,9 +550,17 @@ Join us and we'll do our best to ease your first contribution!
 
 ---
 
-## [fit] Close the outputs gate
+![](assets/img/bg8.jpg)
 
-### video
+## Close the gate of the (Lua) outputs?
+
+## [demo](http://bit.ly/bypass-falco-disabling-lua-outputs-kubecon)
+
+![inline left](https://youtu.be/WVu5pteBbPM)
+
+^ This is the last little bypass demo, I promise!
+
+^ VIDEO
 
 ---
 
