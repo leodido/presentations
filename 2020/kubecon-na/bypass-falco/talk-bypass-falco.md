@@ -442,33 +442,111 @@ Falco rules proven to be very straightforward to adopt, unlike the policy langua
 
 ---
 
-# <rule detecting rename>
+# [fit] Syscalls:
+# [fit] cross and delight
 
-```yaml
-rule: ...
-```
+![right](assets/img/syscalls.png)
 
----
+- `renameat2` :white_check_mark: (Falco >= 0.25)
+- `copy_file_range` :x:
+- `execveat` :x:
+- ...
 
-# RENAMEAT2
+### Support them before Falco 1.0 :dart:
+#### :point_right: [falco#676](https://github.com/falcosecurity/falco/issues/676)
 
-### video
+^ So we discovered together how syscalls are the joy and torment at the same time for Falco!
+
+^ They are a very powerful mechanism that acts as the kernel API that abstracts all the hardware for us.
+
+^ Falco magic is based upon on  them and would not be possible otherwise!
+But, aside from the fact that tracing all the syscalls from a user-space perspective, often, is not a very comfortable process...
+
+^ The issue is that there are a LOT of syscalls.
+And with every Kernel release, they can change, gain a new parameter, new syscalls can be introduced, or old ones deprecated, and things like that.
+So it can be really really painful for us to keep Falco on track!
+
+^ For example, we still miss the “copy_file_range” syscalls. That can be used to bypass Falco rules looking for sensitive file renames.
+A malicious actor could use it to copy all the bytes of a sensitive file and Falco would not detect it because it only looks for “rename”, “renameat”, “renameat2” syscalls in the “rename” macro.
+
+^ Also, “renameat2” was missing until 2 months ago. We added support   for it in Falco 0.25.
+
+^ So, we’re putting an effort to support more and more syscalls before releasing Falco 1.0.
+Especially the ones that could impact the detection ability of Falco.
+You can read more about in the issue I linked in the slide.
+
+^ But we definitely need help from the community to cover as many syscalls as possible.
+This is a wonderful opportunity to contribute to Falco! Don’t miss it!
+
 
 ---
 
 # [fit] Missing syscalls
 
-### considerazioni
-### PRs lore di fix
-### breve how-to
-### CALL-TO-ACTION
+```bash
+#!/usr/bin/env bash
 
-Do you mind start contributing to Falco and its drivers?
-This is a wonderful opportunity honestly.
-Join us and we'll do our best to ease your first contribution!
+DRIVER="/home/vagrant/workspace/draios/sysdig/"
+HEADERS="/lib/modules/$(uname -r)/build/"
+HEADERQUERY="asmlinkage long sys_"
+
+SUP=$(grep -oh "__NR_\w*" "${DRIVER}/driver/syscall_table.c" | \
+            grep -v ia32 | sed -e "s/__NR_//")
+ALL=$(grep "${HEADERQUERY}" "${HEADERS}/include/linux/syscalls.h" | \
+      awk '{print $3}' | sed -e "s/^sys_//" | \
+      sed -e "s/(/ /g" | awk '{print $1}')
+
+sdiff \
+  <(echo "${SUP}" | sort | uniq) \
+  <(echo "${ALL}" | sort | uniq)
+```
+
+## [fit] Is tracing syscalls only enough?
+### :point_right: io_uring
+
+![right](assets/img/sysdiff.png)
+
+^ I think it’s useful now to quickly show you all how to determine which syscalls are not supported yet by the Falco drivers.
+
+^ Otherwise, you won’t know where to start, right?
+
+^ I provide you this little bash script. Don’t forget to clone the sysdig repository, where the Falco drivers, “libsinsp” and “libscap” still reside. But expect to find them soon in the falcosecurity organization…
+
+^  As you can see on the right Falco 0.26 - the one used in the previous demo - doesn’t support yet “execveat” syscall. Neither it supports “copy_file_range”, but it supports “renameat2”!
+
+^ Then, we surely should talk a bit about the idea to extend Falco to something more than syscalls…
+In the Linux Kernel new very cool APIs, like “io_uring”, are landing. The “io_uring” is a new asynchronous I/O API with very little overhead that aims to overcome the limitations of the current “select”, “poll”, “epoll” or “aio” family of system calls.
+
+^ But I suppose this is a topic for my next talk...
 
 ---
 
+# **How to support a new syscall**
+
+### [**demo**](http://bit.ly/renameat2-support-falco-drivers)
+### [**`renameat2` support**](https://github.com/draios/sysdig/pull/1654)
+
+![original](assets/img/manrename.png)
+
+![left](https://youtu.be/WLZN2HVUnl4)
+
+
+^ I imagine it is now even more useful to show you all how to add support for a new syscall, right?
+
+^ When you hit the manual page for the “rename” syscalls you got no surprises!
+^ In fact, as the name suggests, they allow us to rename a file, moving it between directories if required.
+
+^ In this family, we have also the “renameat”, and “renameat2” syscalls.
+The “renameat” syscall operates in exactly the same way as “rename” does, except for some differences in how the file paths, the old ones, and the new ones, are handled.
+
+^ The “renameat2” syscall is equivalent to the “renameat”. It only has an additional flags argument used to specify whether the rename should be atomic, whether you want to allow the overwrite of a file, and so on.
+
+^ Let’s briefly take a look at how support for “renameat2” was added in pull-request 1654, so that - maybe - you can easily contribute your additions!
+^ VIDEO -> CHANGE LINKS
+
+[.slidenumbers: false]
+
+---
 
 ## [fit] Detect package management process ran inside container...
 
@@ -530,6 +608,10 @@ Join us and we'll do our best to ease your first contribution!
   tags: [process, mitre_persistence]
 ```
 
+^ In the Falco default ruleset, we also ship this rule in the slide to let you detect when someone is using the package manager inside your containerized environments…
+
+^ It’s very simple: it fires when a process is spawned inside your container and its name is one in the lists you can see on the left… So “apt-get”, “apt”, “apk”, and so on...
+
 ---
 
 ![](assets/img/bg7.jpg)
@@ -540,13 +622,58 @@ Join us and we'll do our best to ease your first contribution!
 
 ![inline left](https://youtu.be/iDcYR3BJtPU)
 
-^ Let's bypass a Falco rule again now! But differently this time...
+^ Let's bypass it now! This time we’ll not use unsupported syscalls, rather something way simpler...
 
 ^ VIDEO
 
 ---
 
-# Mitigations
+[.column]
+## Mitigations/Considerations
+
+- Monitor symlinks?
+
+  - Ok, but better if automatic
+
+- Ruleset can be ineffective
+
+  - The effectiveness depends on various rules because rules are interconnected
+
+[.column]
+## Advice
+
+- Containers from scratch
+- Read-only entrypoint
+- One data path with `no-exec` flag
+- Falco rule to monitor that only the entrypoint executes
+- Monitor copies, renames, symlinks, open...
+
+^ As we’ve just seen, maybe we need to make Falco rules also monitor the symlinks.
+
+^ We’re thinking to build something inside it that automatically does it.
+This way we don’t have to edit all the rules and we don’t have to remember to also monitor the symlink every time a rule looks for a binary or a file, etc.
+
+^ But we need to make a bigger conversation… And we’d love your feedback too. So please join the Falco Community Calls!
+
+^ We proved that Falco alone is not enough. But this was we all already knew.
+Furthermore, its ruleset, or the one you using, can be incomplete or ineffective.
+
+^ There’s a huge interconnection between different rules: maybe you bypass the one detecting the usage of package managers in containers, but then the one monitoring binaries directories alerts you!
+
+^ So, think about it when you disable a rule. Maybe you don’t need it directly for your use cases, but that rule at least notifies you when someone broke the rule monitoring your use case!
+
+^ For example, a rule that detects the execution of a specific binary is okay alone only if it also monitors the copy, the symlink, and the rename of that file. Even the open because someone could think to “cat” that binary into another file.
+^ Even more, a very malicious actor could pipe from the outside a base64 encoded binary e recreate it, line by line, inside the container.
+
+^ And how to monitor bash scripts? Better prevent in this case!
+^ Like removing bash from the container.
+^ Reducing the attack surface by creating the container images from scratch, not from alpine - even if we love it!
+^ Then, put inside them the read-only binary that has to act as the container entry-point, make only a specific path writable, and also restrict it to contain non-executable files with flag no-exec.
+
+^ Finally, you can create a Falco rule that monitors the only binary executing is the entry-point.
+
+^ This way, you should have reduced a lot the odds of the attackers.
+
 
 ---
 
@@ -558,19 +685,30 @@ Join us and we'll do our best to ease your first contribution!
 
 ![inline left](https://youtu.be/WVu5pteBbPM)
 
-^ This is the last little bypass demo, I promise!
+^ Now another little bypass demo, very different from the others we’ve just seen.
+^ It’s the last one, I promise!
 
 ^ VIDEO
 
 ---
 
-### Solution?
+## Solution?
 
-# [fit] Remove Lua
+# [fit] Remove **Lua**.
 
-We started by rewriting outputs gate in C++. (pr grasso)
+- [Falco outputs refactoring](https://github.com/falcosecurity/falco/pull/1412)
+- [Falco outputs improvements](https://github.com/falcosecurity/falco/issues/1417)
+- **TODO**: rewrite Falco rule parser and engine in C++
 
-We plan to also rewrite the parser and the engine completely. So stay in touch!
+^ How to solve the problem of Lua outputs?
+
+^ We already did it, no worries!
+
+^ We rewrote the complete outputs module of Falco, in C++. Starting with the next release of Falco, the gate of the outputs will be built inside the Falco binary.
+
+^ We plan to also rewrite the parser and the engine completely in C++. This will enable us to reduce the dependency surface of Falco removing Lua related dependencies, too. So stay in touch!
+
+^ In case you wanna take a look at how we did it, I put a link to the pull request as usual.
 
 ---
 
@@ -589,6 +727,16 @@ We plan to also rewrite the parser and the engine completely. So stay in touch!
 
 [.column]
 ![inline](assets/img/handwaving.png)
+
+^ Thanks anyone for being here!
+
+^ This talk was really tough, I admit.
+But I hope you enjoyed my approach, my findings, and my considerations!
+
+^ See you soon, let’s hope in person!
+
+^ In the meantime, follow me on Twitter, join the Falco calls, and let’s keep in touch!
+
 
 [.build-lists: false]
 [.hide-footer: true]
