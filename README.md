@@ -4,5 +4,7 @@
 
 <details><summary>2020</summary>
 <p>
-
-* [Bypass Falco](https://sched.co/ekE4) @ KubeCon + CloudNativeCon North America 2020 Virtual / [Slides](2020/kubecon-na/bypass-falco/slides.pdf) / Video
+  
+| Date | Title | Slides | Video | Conference |
+|-|-|-|-|-|
+| 2020.11.20 | [Bypass Falco](https://sched.co/ekE4) | [Slides](2020/kubecon-na/bypass-falco/slides.pdf) |  | KubeCon + CloudNativeCon North America 2020 Virtual |
