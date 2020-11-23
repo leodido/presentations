@@ -23,3 +23,7 @@
 TBD
 </p>
 </details>
+
+---
+
+[![Analytics](https://ga-beacon.appspot.com/UA-49657176-1/presentations?flat)](https://github.com/igrigorik/ga-beacon)
