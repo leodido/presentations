@@ -2,7 +2,11 @@
 
 > Other talks may have gone lost
 
-<details><summary>2021</summary>
+You can find my decks [here too](https://speakerdeck.com/leodido).
+
+For questions and engagements feel free to ping me at [@leodido](https://twitter.com/leodido).
+
+<details open><summary>2021</summary>
 <p>
 
 | Date       | Title                                           |                                                                                                    Slides                                                                                                    |    Video    | Conference                                          | Type |
@@ -28,9 +32,29 @@
 </p>
 </details>
 
-<details><summary>2019</summary>
+<details open><summary>2019</summary>
 <p>
-TBD
+
+| Date       | Title                                                                                                                                              |                                   Slides                                    |                    Video                    | Conference                   | Type |
+| ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------: | :-----------------------------------------: | ---------------------------- | ---- |
+| 2019.11.17 | [Cloud Native eBPF instrumentation](https://cfp.cloud-native.rejekts.io/cloud-native-rejekts-na-2019/talk/ATPJSX/)                                 | [Slides](https://speakerdeck.com/leodido/cloud-native-ebpf-instrumentation) |          :heavy_multiplication_x:           | Cloud_Native Rejekts [NA 19] | Talk |
+| 2019.10.21 | Go eBPF superpowers                                                                                                                                |        [Slides](https://speakerdeck.com/leodido/go-ebpf-superpowers)        | [Watch](https://youtu.be/tywt_oFMHJE) :vhs: | GoLab Florence 2019          | Talk |
+| 2019.09.19 | [Prometheus as exposition format for eBPF programs running on Kubernetes](https://devopsdays.org/events/2019-istanbul/program/leonardo-di-donato/) |       [Slides](http://bit.ly/ebpf-k8s-prom-devopsdays-istanbul-2019)        | [Watch](https://youtu.be/TekEf6eR8JI) :vhs: | DevOpsDays Istanbul 2019     | Talk |
+| 2019.05.19 | [OpenMetrics: Prometheus Unbound](https://cfp.cloud-native.rejekts.io/cloud-native-rejekts-eu-2019/talk/ZJKBJX/)                                   |                   [Slides](http://bit.ly/openmetrics_bcn)                   |          :heavy_multiplication_x:           | Cloud_Native Rejekts [EU 19] | Talk |
+| 2019.05.18 | [Prometheus as exposition format for eBPF programs](https://cfp.cloud-native.rejekts.io/cloud-native-rejekts-eu-2019/talk/GRK7DW/)                 |                 [Slides](http://bit.ly/prometheus_ebpf_k8s)                 |          :heavy_multiplication_x:           | Cloud_Native Rejekts [EU 19] | Talk |
+| 2019.04.24 | Prometheus as exposition format for eBPF programs                                                                                                  |         [Slides](http://bit.ly/prometheus-openmetrics-bpf-k8s-crd)          | [Watch](https://youtu.be/70_8YJyvwcE) :vhs: | CNCF Turin Meetup            | Talk |
+
+</p>
+</details>
+
+<details open><summary>2018</summary>
+<p>
+
+| Date       | Title                         |                       Slides                       |          Video           | Conference                       | Type |
+| ---------- | ----------------------------- | :------------------------------------------------: | :----------------------: | -------------------------------- | ---- |
+| 2018.10.04 | From logs to metrics          | [Slides](http://bit.ly/logs-2-metrics-influx-code) | :heavy_multiplication_x: | Kubernetes & Cloud-Native Milano | Talk |
+| 2018.02.09 | First dive in the cryptoverse |      [Slides](http://bit.ly/cryptoversetalk)       | :heavy_multiplication_x: | Private event                    | Talk |
+
 </p>
 </details>
 
