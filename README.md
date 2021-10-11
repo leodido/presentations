@@ -9,9 +9,10 @@ For questions and engagements feel free to ping me at [@leodido](https://twitter
 <details open><summary>2021</summary>
 <p>
 
-| Date       | Title                                           |                                                                                                    Slides                                                                                                    |    Video    | Conference                                          | Type |
-| ---------- | ----------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------: | --------------------------------------------------- | ---- |
-| 2021.05.06 | [FalcOMG That's AWESOME](https://sched.co/iE69) | [Slides](https://static.sched.com/hosted_files/kccnceu2021/a1/FalcOMG%20That%27s%20AWESOME%20-%20New%20Things%2C%20Fixed%20Things%2C%20and%20YOU%20%5BKubeCon%20%2B%20CloudNativeCon%20Europe%202021%5D.pdf) | Watch :vhs: | KubeCon + CloudNativeCon North America 2021 Virtual | Talk |
+| Date       | Title                                                                                                 |                                            Slides                                            |                    Video                    | Conference                                          | Type |
+| ---------- | ----------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------: | :-----------------------------------------: | --------------------------------------------------- | ---- |
+| 2021.08.18 | [Scheduling BPF on Kubernetes doesn't have to be difficult](https://ebpf.io/summit-2021/#information) | [Slides](https://speakerdeck.com/leodido/scheduling-ebpf-on-k8s-doesnt-have-to-be-difficult) | [Watch](https://youtu.be/zXRhWRK1UjQ) :vhs: | eBPF Summit 2021                                    | Talk |
+| 2021.05.06 | [FalcOMG That's AWESOME](https://sched.co/iE69)                                                       |               [Slides](https://speakerdeck.com/leodido/falcomg-thats-awesome)                | [Watch](https://youtu.be/KCp6vAdWOD0) :vhs: | KubeCon + CloudNativeCon North America 2021 Virtual | Talk |
 
 </p>
 </details>
