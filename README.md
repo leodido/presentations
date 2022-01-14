@@ -11,6 +11,7 @@ For questions and engagements feel free to ping me at [@leodido](https://twitter
 
 | Date       | Title                                                                                                 |                                            Slides                                            |                    Video                    | Conference                                          | Type |
 | ---------- | ----------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------: | :-----------------------------------------: | --------------------------------------------------- | ---- |
+| 2021.10.11 | [LSM BPF Change Everything](https://sched.co/mFTQ) | :heavy_multiplication_x: | [Watch](https://youtu.be/l8jZ-8uLdVU?t=395) :vhs: | Cloud Native eBPF Day North America 2021 | Talk |
 | 2021.08.18 | [Scheduling BPF on Kubernetes doesn't have to be difficult](https://ebpf.io/summit-2021/#information) | [Slides](https://speakerdeck.com/leodido/scheduling-ebpf-on-k8s-doesnt-have-to-be-difficult) | [Watch](https://youtu.be/zXRhWRK1UjQ) :vhs: | eBPF Summit 2021                                    | Talk |
 | 2021.05.06 | [FalcOMG That's AWESOME](https://sched.co/iE69)                                                       |               [Slides](https://speakerdeck.com/leodido/falcomg-thats-awesome)                | [Watch](https://youtu.be/KCp6vAdWOD0) :vhs: | KubeCon + CloudNativeCon North America 2021 Virtual | Talk |
 
