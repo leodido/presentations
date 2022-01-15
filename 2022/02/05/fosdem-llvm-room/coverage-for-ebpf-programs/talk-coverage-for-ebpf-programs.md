@@ -296,8 +296,8 @@ $ llvm-cov show \
   - its hex representation is also in the name of the `__covrec_*` variable
 
 ^ It also creates the `__llvm_coverage_mapping` constant, a struct made of two parts:
-- the header, that contains things like the coverage mapping format version
-- the data, which contains the file names of the source files
+- the header, that contains things like the coverage mapping format version (see the green box)
+- and the data, which contains the file names of the source files
 
 ^ If you wanna know all the details, I've put some links at the end of this deck. Now, it's time to move on...
 
@@ -328,15 +328,88 @@ $ llvm-cov show \
 
 ---
 
-# [fit] Demystifying the profraw header
+# [fit] Demystifying the profraw's header
 
-^ In case you're like me and love to read the code, in the resources slide I put some links you may find interesting...
+[.column]
+![inline](assets/img/profraw-header.png)
 
-^ Thank me later!
+[.column]
+| | |
+| :------------------------: | :---------------------------------- |
+| magic                      | `__llvm_coverage_mapping[0][3]` + 1 |
+| size of `__llvm_prf_cnts`  | padding before counters             |
+| size of `__llvm_prf_data`  | padding after counters              |
+| size of `__llvm_prf_names` | counters delta                      |
+| names begin                | value kind last                     |
+
+^ But what the header is made of?
+
+^ The header is 80 bytes containing things like:
+- the magic number
+- the format version, obtained from the `__llvm_coverage_mapping`
+- the size of the `__llvm_prf_data` section, which contains all the `__profd_*` variables
+- the size of the `__llvm_prf_cnts` sections, which contains all the `__profc_*` variables
+- the size of the `__llvm_prf_names` section, which contains the `__llvm_prf_nm` variable
+
+^ We need to figure out a way to keep these sections, and these variables, in the intermediate representation of our eBPF programs.
+
+^ At the same time, we need to ensure that the resulting BPF ELF will continue being valid and loadable by the BPF VM in the Linux kernel.
+
+---
+
+# [fit] Demystifying the profraw's data part
+
+![inline](assets/img/profraw-data.png)
+
+^ The data part of the `profraw` file, as you would probably expect, is just the `__llvm_prf_data` section, nothing more.
+
+^ In fact, the boxes in orange here in the screenshot, are the 3 `__profd_*` variables of our dummy C example.
+
+^ For sure, also for eBPF, we're gonna need the ID (index 1) of each of them, the function control flow hash (index 2), and the number of counters the function has (index 6).
+
+^ The address of the counters (index 3) and the address of the function (index 4) will require special attention. We can't have them. Also because we do not want to expose kernel addresses... Right?
+
+---
+
+# [fit] Demystifying the profraw's counters part
+
+![inline](assets/img/profraw-counters.png)
+
+^ Anyways, also the counters part is just a serialization of the `__llvm_prf_cnts` section's content.
+
+^ Here in the image, you may notice we have 5 blue contiguous slots of 8 bytes each.
+
+^ Because we had 1 counter for the `ciao` function, 1 also for the `foo` function, and 3 counters for the `main` function of our example.
+
+^ Each of them contains, in hex, the value of the counter. For example, the first 16 value means that the `ciao` function was executed 22 times. While, the last 16 value means that the last counter of `main`, the one for the `for` cycle`, executed 22 times too!
+
+^ If you come back to the previous slide containing the screenshot of the coverage for our dummy example, you'll see those are the values in there!
+
+^ This is so cool!
+
+---
+
+# [fit] Demystifying the profraw's names part
+
+![inline](assets/img/profraw-names.png)
+
+^ Finally, the names part of the `profraw` file.
+
+^ There isn't much to say about this. It's just the serialization `__llvm_prf_names` section, that contains always and only one variable.
+
+^ The only important thing to notice is the last null byte, the one circled in gray. It's because the `profraw` data needs to be page-aligned so some padding is needed.
 
 ---
 
 # How / PLAN
+
+If you instrument a BPF code and load it ... You'll get a bunch of errors
+
+BPF does not recognize sections like `__llvm_prf_cnts`, `__llvm_prf_data`, and the others in the ELF.
+
+It imposes...
+
+^ We're probably safe ignoring the function address (index 4) because we are gonna dump the `profraw` file after
 
 ^ Why is LLVM pass the correct approach to this in my opinion?
 
@@ -386,6 +459,7 @@ Who wanna read LLVM IR for eBPF with me? 😎
 - [Dissecting the coverage mapping sample](https://llvm.org/docs/CoverageMappingFormat.html#dissecting-the-sample)
 - The encoding of the coverage mapping values: [LEB128](https://en.wikipedia.org/wiki/LEB128)
 - [Demystifying the profraw format](https://leodido.com/demystifying-profraw-format)
+- The functions writing the `profraw` file: [lprofWriteData](https://github.com/llvm/llvm-project/blob/e356027016c6365b3d8924f54c33e2c63d931492/compiler-rt/lib/profile/InstrProfilingWriter.c#L241), [lprofWriteDataImpl](https://github.com/llvm/llvm-project/blob/e356027016c6365b3d8924f54c33e2c63d931492/compiler-rt/lib/profile/InstrProfilingWriter.c#L257)
 
 ^ Here there are the resources I believe you may find useful to go even deeper into this topic
 ^ Enojoy them!
