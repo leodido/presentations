@@ -104,7 +104,7 @@ eBPF is:
 
 * usually written in C
 * compiled via Clang to BPF ELF `.o` files
-  * [LLVM BPF target]()
+  * [LLVM BPF target](https://github.com/llvm/llvm-project/tree/main/llvm/lib/Target/BPF)
 * loaded through the `bpf()` syscall
 * executed by the eBPF Virtual Machine in the Linux kernel
 
@@ -328,7 +328,7 @@ $ llvm-cov show \
 
 ---
 
-# [fit] Demystifying the profraw's header
+# [fit] Demystifying the profraw header
 
 [.column]
 ![inline](assets/img/profraw-header.png)
@@ -357,7 +357,7 @@ $ llvm-cov show \
 
 ---
 
-# [fit] Demystifying the profraw's data part
+# [fit] Demystifying the profraw data part
 
 ![inline](assets/img/profraw-data.png)
 
@@ -371,7 +371,7 @@ $ llvm-cov show \
 
 ---
 
-# [fit] Demystifying the profraw's counters part
+# [fit] Demystifying the profraw counters part
 
 ![inline](assets/img/profraw-counters.png)
 
@@ -389,7 +389,7 @@ $ llvm-cov show \
 
 ---
 
-# [fit] Demystifying the profraw's names part
+# [fit] Demystifying the profraw names part
 
 ![inline](assets/img/profraw-names.png)
 
@@ -401,55 +401,253 @@ $ llvm-cov show \
 
 ---
 
-# How / PLAN
+# [fit] Patching LLVM IR for eBPF coverage
+### How I did it
 
-If you instrument a BPF code and load it ... You'll get a bunch of errors
+[.column]
+```c
+// SPDX-License-Identifier: GPL-2.0-only
+#include "vmlinux.h"
+#include <asm/unistd.h>
+#include <bpf/bpf_helpers.h>
+#include <bpf/bpf_core_read.h>
+#include <bpf/bpf_tracing.h>
 
-BPF does not recognize sections like `__llvm_prf_cnts`, `__llvm_prf_data`, and the others in the ELF.
+char LICENSE[] SEC("license") = "GPL";
 
-It imposes...
+const volatile int count = 0;
 
-^ We're probably safe ignoring the function address (index 4) because we are gonna dump the `profraw` file after
+SEC("raw_tp/sys_enter")
+int BPF_PROG(hook_sys_enter)
+{
+  bpf_printk("ciao0");
 
-^ Why is LLVM pass the correct approach to this in my opinion?
+  struct trace_event_raw_sys_enter *x = (struct trace_event_raw_sys_enter *)ctx;
+  if (x->id != __NR_connect)
+  {
+    return 0;
+  }
 
-^ Before creating a pass to patch the profiling and coverage instrumentation that LLVM put in my C eBPF programs, I tried out many other approaches...
+  for (int i = 1; i < count; i++)
+  {
+    bpf_printk("ciao%d", i);
+  }
 
-^ Like patching the Linux kernel, for this goal...
+  return 0;
+}
+```
 
-^ Or like loading the BPF ELF, obtaining the function and line information with BPF APIs, and then patching the same BPF ELF after the instructions of any line by incrementing a counter in an eBPF map... It was very clumbersome and very unstable because I had to keep track of the global state of registers. No way.
+[.column]
+```c
+// SPDX-License-Identifier: GPL-2.0-only
+#include <asm/unistd.h>
+#include <bpf/bpf.h>
+#include "commons.c"
+#include "raw_enter.skel.h"
 
-^ This is when I realized I had to let the compiler do its job...
+...
 
-All of them are clumbersome
+int main(int argc, char **argv)
+{
+    struct raw_enter *skel;
+    int err;
 
-Patching? Instructions? Global registries...
+    ...
 
-^ profraw image
+    /* Open load and verify BPF application */
+    skel = raw_enter__open();
+    if (!skel) ...
+
+    // Set the counter
+    skel->rodata->count = 10;
+
+    err = raw_enter__load(skel);
+    if (err) ...
+
+    struct trace_event_raw_sys_enter ctx = {.id = __NR_connect};
+
+    struct bpf_prog_test_run_attr tattr = {
+        .prog_fd = bpf_program__fd(skel->progs.hook_sys_enter),
+        .ctx_in = &ctx,
+        .ctx_size_in = sizeof(ctx)
+    };
+    err = bpf_prog_test_run_xattr(&tattr);
+cleanup:
+    raw_enter__destroy(skel);
+    return -err;
+}
+```
+
+^ We should now have a better understanding of what it is the plan to have source-based coverage also for eBPF programs, right?
+
+^ So, assuming we want coverage for this eBPF program on the left, we expect LLVM to instrument it with 2 `__profc_*` global variables, one for the `BPF_PROG` macro with just 1 counter, and another for the `hook_sys_enter` function with 3 total counters.
+
+^ 3 counters for this function because one is to count the number of times this BPF function executes, one is for counting the `if` conditional, and finally the last one accounts for the `for` cycle executions.
+
+^ So, we also expect 2 `__profd_*` global variables in the `__llvm_prf_data` section, the `__llvm_prf_nm` constant in the `__llvm_prf_names` section, the `__covrec_*` constants, the `__llvm_coverage_mapping` constant in the `__llvm_covmap` section
+
+^ Good! But if you compile this BPF program on the left with the `-fprofile-instr-generate` and `-fcoverage-mapping` Clang flags and you then try to load it, you'll get a serious bunch of errors. Why's that?
 
 ---
 
-# Steps / Usage
+# LLVM pass
+### How I did it
+
+![72%](assets/img/libbpfcov-pass-bg.png)
+
+1. Strip the LLVM runtime profile initialization functions/ctors
+2. Ensure the eBPF program is compiled with debug info
+3. Fixup visibility/linkage for **eBPF globals**
+4. Create **custom eBPF sections**
+   * `__llvm_covmap` → `.rodata.covmap`
+   * `__llvm_prf_cnts` → `.data.profc`
+   * `__llvm_prf_data` → `.rodata.profd`
+   * `__llvm_prf_names` → `.rodata.profn`
+5. Remove the `__covrec_*` constant structs
+   * Keep them only in the BPF ELF for `llvm-cov`
+   * Not in the BPF ELF for loading
+6. Convert the `__llvm_coverage_mapping` struct to:
+   * 2 different global arrays (header + data)
+7. Convert any `__profd_*` struct to:
+   * 7 different global constants (ID, hash, ..., # counters, ...)
+8. Annotate with the **debug info** all the global variables and constants
+9. Keep the `llvm.used` in sync
+
+[.build-lists: false]
+
+^ For various reasons.
+
+^ First of all, libbpf supports (on recent Linux kernels) eBPF global variables, which - to simplify - are just eBPF maps with one single value, but it does not accept or recognize the ELF sections that the Clang instrumentation injects in the intermediate representation
+
+^ So we need an LLVM pass that changes them to custom eBPF sections
+
+^ The eBPF custom sections are in the form of `.rodata.` something or `.data.` something. They're made to contain static and/or global data.
+
+^ We also need to strip any global constructor of function that LLVM instrumented for the profiling runtime, or the BPF virtual machine will refuse to load our BPF ELF
+
+^ We also want to ensure that the eBPF program has been compiled with debug info, for relocation matters
+
+^ At the same time, we also need to annotate with debug info all the global variables and constants we are keeping or creating in the BPF LLVM intermediate representation
+
+^ For globals which are structs, since we want to keep things simple, we just transform them into different and single global variables, one for each field. For example, this is what I did for the `__profd_*` variables which originally are a struct with 7 fields.
+
+^ In the case of the `__covrec_*` variables, I just strip them from the BPF ELF that is meant to be loaded in the kernel. I keep them in the other BPF ELF, the one that is intended to be given to `llvm-cov`.
+
+^ So, this is roughly the plan that I came up with, and that I implemented!
 
 ---
 
-# Custom eBPF sections
-# eBPF globals
-# profc, etc. (IR)
+[.column]
 # libBPFCov.so
-# bpfcov run
-# bpfcov gen
-# bpfcov cov
+### How I did it
+
+![inline](assets/img/libbpfcov-llvm-ir.png)
+
+^ The image in this slides highlights everything we've just said so that you can use it as a reference in the future.
+
+^ It shows the output intermediate representation after running the `bpfcov` LLVM pass on a coverage instrumented eBPF program.
 
 ---
 
-# Demo
+# [fit] ./bpfcov [run|gen|cov] ...
+### How I did it
+
+1. `bpfcov run` - _run the instrumented eBPF application_
+   1. Detect the **eBPF globals** (`__profc_*`, `__profd_*`, ...)
+   2. Detect their `.data.profc`, `.rodata.profd`, `.rodata.profn`, and `.rodata.covmap` **custom eBPF sections**
+   3. Pin them to the **BPF FS**
+2. `bpfcov gen` - _generate the `profraw` from eBPF pinned maps_
+   1. Read the content of the **pinned eBPF maps** at:
+      * `/sys/fs/bpf/cov/<program>/{profc,profd,profn,covmap}`
+   1. Dump it to to a valid **profraw** file
+3. `bpfcov cov` - _output coverage reports_
+   1. Generates **profdata** files from `profraw` files
+   2. Merges them into a single one
+   3. **HTML**, **JSON**, **LCOV** coverage reports
+
+^ Once you instrumented your eBPF application running `opt` with the `libBPFCov.so` pass on its LLVM intermediate representation, you have to use the bpfcov CLI tool, executing it with the `run` subcommand.
+
+^ This command acts similar to `strace`. Basically, via the `bpfcov run` command you can run your eBPF application that loads your eBPF ELF.
+
+^ While doing so, it will detect the `bpf()` syscall with the `BPF_MAP_CREATE` command.
+
+^ Meaning that it will catch the eBPF globals in the `.profc`, `.profd`, `.profn`, and `.covmap` custom eBPF sections and pin them to the BPF FS.
+
+^ Since we can't easily attach to the end or exit of an eBPF application, having the counters and all the other data we need in pinned eBPF maps will make us able to generate the `profraw` file manually when the eBPF application is completed, or when we explicitly stopped it.
+
+^ This is why I created the `bpfcov gen` command exists.
+
+^ Once we executed it and we finally have the `profraw` file we can either use the existing LLVM tools (`llvm-profdata` and `llvm-cov`) or simply use the `cov` subcommand, which is an opinionated shortcut to generate HTML, JSON, or LCOV coverage reports even from multiple eBPF programs and their `profraw` files.
+
+---
+
+# Usage
+
+[.column]
+```bash
+clang -g -O2 \
+  -target bpf \
+  -D__TARGET_ARCH_x86 \
+  -I$(YOUR_INCLUDES) \
+  -fprofile-instr-generate \
+  -fcoverage-mapping \
+  -emit-llvm -S \
+  -c program.bpf.c \
+  -o program.bpf.ll
+
+opt -load-pass-plugin $(BUILD_DIR)/lib/libBPFCov.so \
+  -passes="bpf-cov" \
+  -S program.bpf.ll \
+  -o program.bpf.cov.ll
+
+llc -march=bpf -filetype=obj \
+  -o cov/program.bpf.o \
+  program.bpf.cov.ll
+
+opt -load $(BUILD_DIR)/lib/libBPFCov.so \
+  -strip-initializers-only -bpf-cov \
+  program.bpf.ll | \
+  llc -march=bpf -filetype=obj \
+    -o cov/program.bpf.obj
+```
+
+[.column]
+```bash
+sudo ./bpfcov run cov/program
+# Wait for it to exit
+# Or stop it with CTRL+C
+
+sudo ./bpfcov gen --unpin cov/program
+
+./bpfcov cov \
+  -o awsm_report \
+  --format=html cov/program.profraw
+```
+
+^ In this slide, I wrote down the manual steps you would need to instrument your eBPF application for code coverage. Basically, the ones we're gonna run in a second!
+
+^ Please notice these steps, especially the ones on the left, are automated in the examples Makefile you can find in the GitHub repository.
+
+---
+
+# [fit] **Demo**
 
 Who wanna read LLVM IR for eBPF with me? 😎
 
+^ Who wanna read LLVM IR for eBPF with me? 😎
+
+^ Let's see all I described in action!
+
 ---
 
-# Results
+![inline fill](assets/img/stdo1.png)![inline fill](assets/img/stdo2.png)![inline fill](assets/img/mult1.png)
+![inline fill](assets/img/html2.png)![inline fill](assets/img/html1.png)![inline fill](assets/img/json1.png)
+![inline fill](assets/img/lcov1.png)![inline fill](assets/img/html3.png)![inline fill](assets/img/html4.png)
+
+[.hide-footer: true]
+[.slidenumbers: false]
+
+^ So to obtain wonderful coverage reports for our eBPF programs like those here in this slide!
 
 ---
 
@@ -459,10 +657,14 @@ Who wanna read LLVM IR for eBPF with me? 😎
 - [Dissecting the coverage mapping sample](https://llvm.org/docs/CoverageMappingFormat.html#dissecting-the-sample)
 - The encoding of the coverage mapping values: [LEB128](https://en.wikipedia.org/wiki/LEB128)
 - [Demystifying the profraw format](https://leodido.com/demystifying-profraw-format)
-- The functions writing the `profraw` file: [lprofWriteData](https://github.com/llvm/llvm-project/blob/e356027016c6365b3d8924f54c33e2c63d931492/compiler-rt/lib/profile/InstrProfilingWriter.c#L241), [lprofWriteDataImpl](https://github.com/llvm/llvm-project/blob/e356027016c6365b3d8924f54c33e2c63d931492/compiler-rt/lib/profile/InstrProfilingWriter.c#L257)
+- The functions writing the `profraw` file: [lprofWriteData()](https://github.com/llvm/llvm-project/blob/e356027016c6365b3d8924f54c33e2c63d931492/compiler-rt/lib/profile/InstrProfilingWriter.c#L241), [lprofWriteDataImpl()](https://github.com/llvm/llvm-project/blob/e356027016c6365b3d8924f54c33e2c63d931492/compiler-rt/lib/profile/InstrProfilingWriter.c#L257)
+- Patch adding support for eBPF globals
+- Patch adding support for custom eBPF sections
+- [LLVM BPF target source](https://github.com/llvm/llvm-project/tree/main/llvm/lib/Target/BPF)
+- [How LLVM processes BPF globals](https://github.com/llvm/llvm-project/blob/ff85dcb1c5b01411a6f9f2dc4c0e087467411f50/llvm/lib/Target/BPF/BTFDebug.cpp#L1276)
 
-^ Here there are the resources I believe you may find useful to go even deeper into this topic
-^ Enojoy them!
+^ Here there are some resources I believe you may find useful to go even deeper into this topic
+^ Enjoy them!
 
 [.build-lists: false]
 
@@ -470,7 +672,7 @@ Who wanna read LLVM IR for eBPF with me? 😎
 
 ![fit](assets/img/wyvern.png)
 
-# [fit] Thanks!
+# [fit] Thank you!
 ### Questions?
 
 ![inline fit](assets/img/FOSDEM_logo.png)
@@ -483,11 +685,11 @@ Who wanna read LLVM IR for eBPF with me? 😎
 [.column]
 ![inline](assets/img/handwaving.png)
 
-^ We mae it to the end!
+^ We made it to the end!
 
 ^ Thanks everyone for being here and to bear with me!
 
-^ I hope you enjoyed my approach on using the LLVM powers to create a
+^ I hope you enjoyed my approach to understanding, patching, and using the LLVM powers to give coverage reports to the eBPF community!
 
 ^ See you soon, let’s hope in person!
 
