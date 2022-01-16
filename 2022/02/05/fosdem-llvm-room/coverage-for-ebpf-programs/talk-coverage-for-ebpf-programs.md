@@ -125,19 +125,33 @@ Whether they are getting loaded through `BPF_PROG_TEST_RUN` or by other ordinary
 
 ---
 
+[.column]
 # What's source-based coverage?
 
-TODO? CON IMG DI QUELL'ALTRO TALK?
+* Line-level granularity is not enough
+* AST → regions, branches, ...
+* Better to find grasps in the code
 
-^ Line-level granularity is sometimes too coarse... Source-based code coverage is more precise. It even precisely counts things like short-circuited conditionals.
+![](https://www.youtube.com/watch?app=desktop&v=H1hvtJPGWNQ)
 
-^ LLVM's existing coverage tools (llvm-profdata and llvm-cov) generate coverage summaries with very fined-grained code regions, helping us find graps in the code.
+[.column]
+![inline](assets/img/sourcebasedcov1.png)
 
-^ We wanna coverage reports that do not show only an approximation of what code actually executed. That's why we shoot for source-base code
+![inline](assets/img/sourcebasedcov2.png)
 
-^ Counter arithmetics and expressions
+[.build-lists: false]
+[.hide-footer: true]
+[.slidenumbers: false]
 
-^ Knows the AST
+^ Line-level granularity is sometimes too coarse...
+
+^ We do not want an approximation of what code actually executed.
+
+^ Source-based code coverage is more precise. It has the notion of regions of the code, branches, and so on because it starts at abstract syntax tree time. It even precisely counts things like short-circuited conditionals, thanks to the counter expression and arithmetics.
+
+^ It generates coverage summaries with very fined-grained code regions, helping us find grasps in the code.
+
+^ If you wanna know more aobut how it's done and why it's so precise, I suggest you watch this talk by Alan Phipps.
 
 ---
 
@@ -531,14 +545,14 @@ cleanup:
 
 ^ For globals which are structs, since we want to keep things simple, we just transform them into different and single global variables, one for each field. For example, this is what I did for the `__profd_*` variables which originally are a struct with 7 fields.
 
-^ In the case of the `__covrec_*` variables, I just strip them from the BPF ELF that is meant to be loaded in the kernel. I keep them in the other BPF ELF, the one that is intended to be given to `llvm-cov`.
+^ In the case of the `__covrec_*` variables, I just strip them from the BPF ELF that is meant to be loaded in the kernel. I keep them in the other BPF ELF, the one that is intended to be given to `llvm-cov`. This is the reason we'll execute this LLVM pass two times with `opt`, one time with the `strip-initializers-only` flag.
 
 ^ So, this is roughly the plan that I came up with, and that I implemented!
 
 ---
 
 [.column]
-# libBPFCov.so
+# **libBPFCov.so**
 ### How I did it
 
 ![inline](assets/img/libbpfcov-llvm-ir.png)
@@ -549,21 +563,19 @@ cleanup:
 
 ---
 
-# [fit] ./bpfcov [run|gen|cov] ...
+# [fit] ./**bpfcov** run ...
 ### How I did it
 
 1. `bpfcov run` - _run the instrumented eBPF application_
    1. Detect the **eBPF globals** (`__profc_*`, `__profd_*`, ...)
-   2. Detect their `.data.profc`, `.rodata.profd`, `.rodata.profn`, and `.rodata.covmap` **custom eBPF sections**
+   2. Detect their **custom eBPF sections**
+      * `.data.profc`
+      * `.rodata.profd`,
+      * `.rodata.profn`
+      * `.rodata.covmap`
    3. Pin them to the **BPF FS**
-2. `bpfcov gen` - _generate the `profraw` from eBPF pinned maps_
-   1. Read the content of the **pinned eBPF maps** at:
-      * `/sys/fs/bpf/cov/<program>/{profc,profd,profn,covmap}`
-   1. Dump it to to a valid **profraw** file
-3. `bpfcov cov` - _output coverage reports_
-   1. Generates **profdata** files from `profraw` files
-   2. Merges them into a single one
-   3. **HTML**, **JSON**, **LCOV** coverage reports
+
+[.build-lists: false]
 
 ^ Once you instrumented your eBPF application running `opt` with the `libBPFCov.so` pass on its LLVM intermediate representation, you have to use the bpfcov CLI tool, executing it with the `run` subcommand.
 
@@ -575,7 +587,23 @@ cleanup:
 
 ^ Since we can't easily attach to the end or exit of an eBPF application, having the counters and all the other data we need in pinned eBPF maps will make us able to generate the `profraw` file manually when the eBPF application is completed, or when we explicitly stopped it.
 
-^ This is why I created the `bpfcov gen` command exists.
+---
+
+# [fit] ./**bpfcov** gen|cov ...
+### How I did it
+
+1. `bpfcov gen` - _generate the `profraw` from eBPF pinned maps_
+   1. Read the content of the **pinned eBPF maps** at:
+      * `/sys/fs/bpf/cov/<program>/{profc,profd,profn,covmap}`
+   1. Dump it to to a valid **profraw** file
+3. `bpfcov cov` - _output coverage reports_
+   1. Generates **profdata** files from `profraw` files
+   2. Merges them into a single one
+   3. **HTML**, **JSON**, **LCOV** coverage reports
+
+[.build-lists: false]
+
+^ This is why I created the `bpfcov gen` command exists. To dump the pinned maps in a `profraw` file.
 
 ^ Once we executed it and we finally have the `profraw` file we can either use the existing LLVM tools (`llvm-profdata` and `llvm-cov`) or simply use the `cov` subcommand, which is an opinionated shortcut to generate HTML, JSON, or LCOV coverage reports even from multiple eBPF programs and their `profraw` files.
 
@@ -584,6 +612,7 @@ cleanup:
 # Usage
 
 [.column]
+#### **Compilation**
 ```bash
 clang -g -O2 \
   -target bpf \
@@ -612,6 +641,7 @@ opt -load $(BUILD_DIR)/lib/libBPFCov.so \
 ```
 
 [.column]
+#### **Execution**
 ```bash
 sudo ./bpfcov run cov/program
 # Wait for it to exit
@@ -653,15 +683,20 @@ Who wanna read LLVM IR for eBPF with me? 😎
 
 # Resources
 
+- [Writing an LLVM pass](https://llvm.org/docs/WritingAnLLVMPass.html)
 - The [Coverage Mapping](https://llvm.org/docs/CoverageMappingFormat.html) format
 - [Dissecting the coverage mapping sample](https://llvm.org/docs/CoverageMappingFormat.html#dissecting-the-sample)
 - The encoding of the coverage mapping values: [LEB128](https://en.wikipedia.org/wiki/LEB128)
 - [Demystifying the profraw format](https://leodido.com/demystifying-profraw-format)
 - The functions writing the `profraw` file: [lprofWriteData()](https://github.com/llvm/llvm-project/blob/e356027016c6365b3d8924f54c33e2c63d931492/compiler-rt/lib/profile/InstrProfilingWriter.c#L241), [lprofWriteDataImpl()](https://github.com/llvm/llvm-project/blob/e356027016c6365b3d8924f54c33e2c63d931492/compiler-rt/lib/profile/InstrProfilingWriter.c#L257)
-- Patch adding support for eBPF globals
-- Patch adding support for custom eBPF sections
+- Source code (LLVM) emitting `__covrec_*` constants: [CodeGen/CoverageMappingGen.cpp](https://github.com/llvm/llvm-project/blob/d0ac215dd5496a44ce8a6660378ea40a6e1c148d/clang/lib/CodeGen/CoverageMappingGen.cpp#L1589)
+- Calls to `CoverageMappingModuleGen` in LLVM: [CodeGenAction::CreateASTConsumer](https://github.com/llvm/llvm-project/blob/063c2f89aa7f5b0b61a63d639d8124035f26935c/clang/lib/CodeGen/CodeGenAction.cpp#L1016), [CodeGenModule::CodeGenModule](https://github.com/llvm/llvm-project/blob/de34a940ae72dfa6425a025538484f9505ca1d42/clang/lib/CodeGen/CodeGenModule.cpp#L183)
+- Kernel patch: [eBPF support for global data](https://patchwork.ozlabs.org/project/netdev/cover/20190409212018.32423-1-daniel@iogearbox.net/)
+- Kernel patch: [libbpf: support global data/bss/rodata sections](https://patchwork.ozlabs.org/project/netdev/patch/b73889608508d98bbd4d58af032528626a4950b0.1554731339.git.daniel@iogearbox.net/)
+- [libbpf: arbitrarly named .rodata.* and .data.* ELF sections](https://github.com/libbpf/libbpf/blob/be89b28f96be426e30a2b0c5312d13b30ee518c7/src/libbpf.c#L1498-L1516)
 - [LLVM BPF target source](https://github.com/llvm/llvm-project/tree/main/llvm/lib/Target/BPF)
 - [How LLVM processes BPF globals](https://github.com/llvm/llvm-project/blob/ff85dcb1c5b01411a6f9f2dc4c0e087467411f50/llvm/lib/Target/BPF/BTFDebug.cpp#L1276)
+- [Branch Coverage: Squeezing more out of LLVM Source-based Code Coverage](https://www.youtube.com/watch?app=desktop&v=H1hvtJPGWNQ) by Alan Phipps
 
 ^ Here there are some resources I believe you may find useful to go even deeper into this topic
 ^ Enjoy them!
