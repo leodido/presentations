@@ -6,6 +6,16 @@ You can find my decks [here too](https://speakerdeck.com/leodido).
 
 For questions and engagements feel free to ping me at [@leodido](https://twitter.com/leodido).
 
+<details open><summary>2022</summary>
+<p>
+
+| Date       | Title                                                                                                 |                                            Slides                                            |                    Video                    | Conference                                          | Type |
+| ---------- | ----------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------: | :-----------------------------------------: | --------------------------------------------------- | ---- |
+| 2022.02.05 | [Coverage for eBPF programs](https://fosdem.org/2022/schedule/event/llvm_ebpf/) | [Slides](https://speakerdeck.com/leodido/coverage-for-ebpf-programs) | Watch :vhs: | FOSDEM 22 | Talk |
+
+</p>
+</details>
+
 <details open><summary>2021</summary>
 <p>
 
