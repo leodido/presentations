@@ -589,14 +589,14 @@ cleanup:
 
 ---
 
-# [fit] ./**bpfcov** gen|cov ...
+# [fit] ./**bpfcov** gen|out ...
 ### How I did it
 
 1. `bpfcov gen` - _generate the `profraw` from eBPF pinned maps_
    1. Read the content of the **pinned eBPF maps** at:
       * `/sys/fs/bpf/cov/<program>/{profc,profd,profn,covmap}`
    1. Dump it to to a valid **profraw** file
-3. `bpfcov cov` - _output coverage reports_
+3. `bpfcov out` - _output coverage reports_
    1. Generates **profdata** files from `profraw` files
    2. Merges them into a single one
    3. **HTML**, **JSON**, **LCOV** coverage reports
@@ -649,7 +649,7 @@ sudo ./bpfcov run cov/program
 
 sudo ./bpfcov gen --unpin cov/program
 
-./bpfcov cov \
+./bpfcov out \
   -o awsm_report \
   --format=html cov/program.profraw
 ```
