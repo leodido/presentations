@@ -683,6 +683,7 @@ Who wanna read LLVM IR for eBPF with me? 😎
 
 # Resources
 
+- Blog post: [Coverage for eBPF programs]()
 - [Writing an LLVM pass](https://llvm.org/docs/WritingAnLLVMPass.html)
 - The [Coverage Mapping](https://llvm.org/docs/CoverageMappingFormat.html) format
 - [Dissecting the coverage mapping sample](https://llvm.org/docs/CoverageMappingFormat.html#dissecting-the-sample)
