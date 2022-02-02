@@ -309,7 +309,8 @@
       "repositories": [
          {
             "name": "gh:bpftools/kube-bpf",
-            "url": "https://github.com/bpftools/kube-bpf"
+            "url": "https://github.com/bpftools/kube-bpf",
+            "symbol": "⎈"
          },
          {
             "name": "gh:iovisor/kubectl-trace",
@@ -359,7 +360,8 @@
       "repositories": [
          {
             "name": "gh:bpftools/kube-bpf",
-            "url": "https://github.com/bpftools/kube-bpf"
+            "url": "https://github.com/bpftools/kube-bpf",
+            "symbol: "⎈"
          }
       ],
       "pitch": "This talk exposes the idea, and a reference implementation, of using eBPF programs for generating Prometheus metrics regarding our Kubernetes cluster.",
@@ -402,7 +404,8 @@
       "repositories": [
          {
             "name": "gh:bpftools/kube-bpf",
-            "url": "https://github.com/bpftools/kube-bpf"
+            "url": "https://github.com/bpftools/kube-bpf",
+            "symbol": "⎈"
          }
       ],
       "url": "https://cfp.cloud-native.rejekts.io/cloud-native-rejekts-eu-2019/talk/GRK7DW/",
@@ -427,7 +430,8 @@
       "repositories": [
          {
             "name": "gh:bpftools/kube-bpf",
-            "url": "https://github.com/bpftools/kube-bpf"
+            "url": "https://github.com/bpftools/kube-bpf",
+            "symbol": "⎈"
          }
       ],
       "url": null,
