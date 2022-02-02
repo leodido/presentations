@@ -1,496 +1,496 @@
 [
-   {
-      "year": "2022",
-      "month": "02",
-      "day": "05",
-      "type": "talk",
-      "title": "Coverage for eBPF programs",
-      "url": "https://fosdem.org/2022/schedule/event/llvm_ebpf/",
-      "repositories": [
-         {
-            "name": "gh:elastic/bpfcov",
-            "url": "https://github.com/elastic/bpfcov",
-            "symbol": "🐝"
-         }
-      ],
-      "pitch": "eBPF is fastly becoming the first choice for implementing tracing and security-critical applications and software.</p><p>Yet, its ecosystem lacks tooling to make developers' life easier.</p><p>Join this talk to get to know [bpfcov](https://github.com/elastic/bpfcov): an open-source tool I wrote that uses the LLVM pass infrastructure to instrument your eBPF programs to collect coverage data while they run in the eBPF VM in the Linux kernel.",
-      "deck": "https://speakerdeck.com/leodido/coverage-for-ebpf-programs",
-      "youtube": {
-         "id": null
+  {
+    "year": "2022",
+    "month": "02",
+    "day": "05",
+    "type": "talk",
+    "title": "Coverage for eBPF programs",
+    "url": "https://fosdem.org/2022/schedule/event/llvm_ebpf/",
+    "repositories": [
+      {
+        "name": "gh:elastic/bpfcov",
+        "url": "https://github.com/elastic/bpfcov",
+        "symbol": "🐝"
+      }
+    ],
+    "pitch": "eBPF is fastly becoming the first choice for implementing tracing and security-critical applications and software.</p><p>Yet, its ecosystem lacks tooling to make developers' life easier.</p><p>Join this talk to get to know [bpfcov](https://github.com/elastic/bpfcov): an open-source tool I wrote that uses the LLVM pass infrastructure to instrument your eBPF programs to collect coverage data while they run in the eBPF VM in the Linux kernel.",
+    "deck": "https://speakerdeck.com/leodido/coverage-for-ebpf-programs",
+    "youtube": {
+      "id": null
+    },
+    "conference": "FOSDEM",
+    "tags": [
+      "LLVM",
+      "clang",
+      "coverage",
+      "eBPF"
+    ]
+  },
+  {
+    "year": "2021",
+    "month": "10",
+    "day": "11",
+    "type": "talk",
+    "title": "LSM BPF Changes Everything",
+    "url": "https://sched.co/mFTQ",
+    "repositories": [
+      {
+        "name": "gh:leodido/demo-cloud-native-ebpf-day",
+        "url": "https://github.com/leodido/demo-cloud-native-ebpf-day"
+      }
+    ],
+    "pitch": "Much is being said on security recently.<br>Almost as much was said about tracing the syscalls happening in the Linux Kernel with BPF.</p><p>Aside from all the buzz, we need to appraise some gaps in the current narrative.<br>We need to fill in the gaps in the actual syscall execution flow to avoid attackers using them.</p><p>Here enters the game the general security hooks for Linux, namely LSMs, and their integration with BPF.",
+    "deck": null,
+    "youtube": {
+      "id": "l8jZ-8uLdVU",
+      "start": 395
+    },
+    "conference": "Cloud Native eBPF Day North America",
+    "tags": [
+      "kernel",
+      "LSM",
+      "eBPF",
+      "security",
+      "TOCTOU"
+    ]
+  },
+  {
+    "year": "2021",
+    "month": "08",
+    "day": "18",
+    "type": "lightning talk",
+    "title": "Scheduling BPF on Kubernetes doesn't have to be difficult",
+    "url": "https://ebpf.io/summit-2021/#information",
+    "repositories": [
+      {
+        "name": "gh:iovisor/kubectl-trace",
+        "url": "https://github.com/iovisor/kubectl-trace",
+        "symbol": ""
+      }
+    ],
+    "pitch": "The [kubectl-trace](https://github.com/iovisor/kubectl-trace) project is a kubectl plugin that makes our lives easier, allowing us to use BPF programs against our Kubernetes clusters.</p><p>You are 5 minutes away from starting scheduling your [bpftrace](https://github.com/iovisor/bpftrace) programs (or whatever BPF frontend language) against your clusters.",
+    "deck": "https://speakerdeck.com/leodido/scheduling-ebpf-on-k8s-doesnt-have-to-be-difficult",
+    "youtube": {
+      "id": "zXRhWRK1UjQ"
+    },
+    "conference": "eBPF Summit",
+    "tags": [
+      "Kubernetes",
+      "kubectl",
+      "tracing",
+      "eBPF",
+      "bpftrace"
+    ]
+  },
+  {
+    "year": "2021",
+    "month": "05",
+    "day": "06",
+    "type": "maintainers track",
+    "title": "FalcOMG That's AWESOME",
+    "url": "https://sched.co/iE69",
+    "pitch": "Updates on everything happening in the [Falco](https://falco.org/) project, the de-facto Kubernetes threat detection engine, in 2021.",
+    "deck": "https://speakerdeck.com/leodido/falcomg-thats-awesome",
+    "youtube": {
+      "id": "KCp6vAdWOD0"
+    },
+    "repositories": [
+      {
+        "name": "gh:falcosecurity/falco",
+        "url": "https://github.com/falcosecurity/falco"
+      }
+    ],
+    "conference": "KubeCon North America",
+    "tags": [
+      "Falco",
+      "Kubernetes",
+      "security",
+      "eBPF",
+      "CNCF"
+    ]
+  },
+  {
+    "year": "2020",
+    "month": "11",
+    "day": "20",
+    "type": "talk",
+    "title": "Bypass Falco",
+    "url": "https://sched.co/ekE4",
+    "pitch": "Maybe you trust it as your last line of defense in today's cloud-native environments, and as a consequence, you sleep like a log.<br>Well, I'm a Falco maintainer, and I definitely wouldn't.</p><p>During this session, we're gonna explore how to bypass Falco and leave us like sitting ducks, defenseless.",
+    "deck": "https://static.sched.com/hosted_files/kccncna20/56/Bypass%20Falco%20%5BKubeCon%20%2B%20CloudNativeCon%20NA%202020%5D.pdf",
+    "youtube": {
+      "id": "nGqWskXRSmo"
+    },
+    "repositories": [
+      {
+        "name": "gh:falcosecurity/falco",
+        "url": "https://github.com/falcosecurity/falco"
+      }
+    ],
+    "conference": "KubeCon North America",
+    "tags": [
+      "Falco",
+      "security",
+      "bypass",
+      "tracepoint",
+      "syscalls"
+    ]
+  },
+  {
+    "year": "2020",
+    "month": "10",
+    "day": "29",
+    "type": "live stream",
+    "title": "Intro to Falco",
+    "url": null,
+    "pitch": "[Falco](https://falco.org), the open-source cloud-native runtime security project, is the de facto Kubernetes threat detection engine. </p><p>During this live stream two core maintainers of Falco show how it detects unexpected application behavior and alerts on threats at runtime, even for Kubernetes.",
+    "deck": null,
+    "youtube": {
+      "id": "4jJaDf6BYJQ"
+    },
+    "repositories": [],
+    "conference": "Rawkode Live",
+    "tags": [
+      "Falco",
+      "Kubernetes",
+      "security",
+      "detection"
+    ]
+  },
+  {
+    "year": "2020",
+    "month": "09",
+    "day": "27",
+    "type": "talk",
+    "title": "Falco, runtime security analysis through syscalls",
+    "url": "https://2020.romhack.io/speakers-2020.html#didonato",
+    "pitch": "In every Linux system, we have the syscalls interface to trace what userspace processes are doing at the upper level and eventually take action.<br>Anyway, this is easier said than done. Because tracing and processing every system call in userspace results in a very unique set of challenges.</p><p>This is what [Falco](https://falco.org) does.",
+    "deck": "https://speakerdeck.com/leodido/falco-runtime-security-analysis-through-syscalls-f14e1a38-b460-410e-9eb8-73ab0262d654",
+    "youtube": {
+      "id": "8o804koab2g"
+    },
+    "repositories": [
+      {
+        "name": "gh:falcosecurity/falco",
+        "url": "https://github.com/falcosecurity/falco"
+      }
+    ],
+    "conference": "RomHack Rome",
+    "tags": [
+      "Falco",
+      "syscalls",
+      "security",
+      "detection"
+    ]
+  },
+  {
+    "year": "2020",
+    "month": "08",
+    "day": "20",
+    "type": "talk",
+    "title": "Going Beyond CI/CD with Prow",
+    "url": "https://sched.co/ZenU",
+    "pitch": "One of the most untold secrets is how hard and important is to automate the whole set of workflows around the code, not only the testing phase.</p><p>We were able to use the native Kubernetes CI/CD system - Prow - to solve CI/CD for Falco.",
+    "deck": "https://static.sched.com/hosted_files/kccnceu20/b4/Going%20Beyond%20CI_CD%20with%20Prow%20%5BKubeCon%20%2B%20CloudNativeCon%20Europe%202020%5D.pdf",
+    "youtube": {
+      "id": "qQvoImxHydk"
+    },
+    "repositories": [
+      {
+        "name": "gh:falcosecurity/test-infra",
+        "url": "https://github.com/falcosecurity/test-infra"
       },
-      "conference": "FOSDEM",
-      "tags": [
-         "LLVM",
-         "clang",
-         "coverage",
-         "eBPF"
-      ]
-   },
-   {
-      "year": "2021",
-      "month": "10",
-      "day": "11",
-      "type": "talk",
-      "title": "LSM BPF Changes Everything",
-      "url": "https://sched.co/mFTQ",
-      "repositories": [
-         {
-            "name": "gh:leodido/demo-cloud-native-ebpf-day",
-            "url": "https://github.com/leodido/demo-cloud-native-ebpf-day"
-         }
-      ],
-      "pitch": "Much is being said on security recently.<br>Almost as much was said about tracing the syscalls happening in the Linux Kernel with BPF.</p><p>Aside from all the buzz, we need to appraise some gaps in the current narrative.<br>We need to fill in the gaps in the actual syscall execution flow to avoid attackers using them.</p><p>Here enters the game the general security hooks for Linux, namely LSMs, and their integration with BPF.",
-      "deck": null,
-      "youtube": {
-         "id": "l8jZ-8uLdVU",
-         "start": 395
+      {
+        "name": "gh:k8s/test-infra/prow",
+        "url": "https://github.com/kubernetes/test-infra/tree/master/prow"
+      }
+    ],
+    "conference": "KubeCon Europe",
+    "tags": [
+      "Kubernetes",
+      "CI/CD",
+      "Prow",
+      "plugins",
+      "automation",
+      "opensource"
+    ]
+  },
+  {
+    "year": "2020",
+    "month": "08",
+    "day": "19",
+    "type": "talk",
+    "title": "Designing a gRPC Interface for Kernel Tracing with eBPF",
+    "url": "https://sched.co/Zexb",
+    "pitch": "Designing a mutually TLS authenticated API over gRPC in C/C++ to ship alerts and solve the runtime security problem.</p><p>In this talk I go through the challenges I faced with designing the interface, as well as the performance concerns with parsing millions of syscalls using eBPF over gRPC.",
+    "deck": "https://static.sched.com/hosted_files/kccnceu20/c7/Aug19_Designing_a_gRPC_Interface_for_Kernel_Tracing_with_eBPF_Leonardo_DiDonato.pdf",
+    "youtube": {
+      "id": "kjOJfNDPVSo"
+    },
+    "repositories": [
+      {
+        "name": "gh:falcosecurity/falco",
+        "url": "https://github.com/falcosecurity/falco"
       },
-      "conference": "Cloud Native eBPF Day North America",
-      "tags": [
-         "kernel",
-         "LSM",
-         "eBPF",
-         "security",
-         "TOCTOU"
-      ]
-   },
-   {
-      "year": "2021",
-      "month": "08",
-      "day": "18",
-      "type": "lightning talk",
-      "title": "Scheduling BPF on Kubernetes doesn't have to be difficult",
-      "url": "https://ebpf.io/summit-2021/#information",
-      "repositories": [
-         {
-            "name": "gh:iovisor/kubectl-trace",
-            "url": "https://github.com/iovisor/kubectl-trace",
-            "symbol": ""
-         }
-      ],
-      "pitch": "The [kubectl-trace](https://github.com/iovisor/kubectl-trace) project is a kubectl plugin that makes our lives easier, allowing us to use BPF programs against our Kubernetes clusters.</p><p>You are 5 minutes away from starting scheduling your [bpftrace](https://github.com/iovisor/bpftrace) programs (or whatever BPF frontend language) against your clusters.",
-      "deck": "https://speakerdeck.com/leodido/scheduling-ebpf-on-k8s-doesnt-have-to-be-difficult",
-      "youtube": {
-         "id": "zXRhWRK1UjQ"
+      {
+        "name": "gh:grpc/grpc",
+        "url": "https://github.com/grpc/grpc"
+      }
+    ],
+    "conference": "KubeCon Europe",
+    "tags": [
+      "Falco",
+      "gRPC",
+      "tracing",
+      "C++",
+      "security"
+    ]
+  },
+  {
+    "year": "2020",
+    "month": "06",
+    "day": "20",
+    "type": "talk",
+    "title": "Falco, runtime security analysis through syscalls",
+    "url": null,
+    "pitch": "In every Linux system, we have the syscalls interface to trace what userspace processes are doing at the upper level and eventually take action.<br>Anyway, this is easier said than done. Because tracing and processing every system call in userspace results in a very unique set of challenges.</p><p>This is what [Falco](https://falco.org) does.",
+    "deck": "https://speakerdeck.com/leodido/falco-runtime-security-analysis-through-syscalls",
+    "youtube": {
+      "id": "SzqgcT_-3Z0"
+    },
+    "repositories": [
+      {
+        "name": "gh:falcosecurity/falco",
+        "url": "https://github.com/falcosecurity/falco"
+      }
+    ],
+    "conference": "BSides Athens",
+    "tags": [
+      "Falco",
+      "syscalls",
+      "security",
+      "detection"
+    ]
+  },
+  {
+    "year": "2020",
+    "month": "02",
+    "day": "18",
+    "type": "podcast",
+    "title": "eBPF & Falco",
+    "url": null,
+    "pitch": "We dive into the Linux kernel this week with guest [Leonardo Di Donato](https://twitter.com/leodido), Open Source engineer. Leonardo works full-time on the [Falco](https://falco.org) project, a runtime security engine that listens to the Linux kernel using eBPF - the extended Berkeley Packet Filter.</p><p>Leonardo tells the hosts about the architecture of eBPF, how he has used it before and now, and what's coming up for Falco.",
+    "deck": null,
+    "spotify": {
+      "id": "3h4iid9BViqm0DGMlTq3qt",
+      "start": 453
+    },
+    "repositories": [],
+    "conference": "Kubernetes Podcast from Google",
+    "tags": [
+      "Falco",
+      "Kubernetes",
+      "security",
+      "eBPF"
+    ]
+  },
+  {
+    "year": "2019",
+    "month": "11",
+    "day": "17",
+    "type": "talk",
+    "title": "Cloud Native eBPF instrumentation",
+    "url": "https://cfp.cloud-native.rejekts.io/cloud-native-rejekts-na-2019/talk/ATPJSX/",
+    "pitch": "How to use eBPF for creating tools aware of both the kernel and the Kubernetes layers.",
+    "deck": "https://speakerdeck.com/leodido/cloud-native-ebpf-instrumentation",
+    "youtube": {
+      "id": null
+    },
+    "repositories": [
+      {
+        "name": "gh:bpftools/kube-bpf",
+        "url": "https://github.com/bpftools/kube-bpf",
+        "symbol": "⎈"
       },
-      "conference": "eBPF Summit",
-      "tags": [
-         "Kubernetes",
-         "kubectl",
-         "tracing",
-         "eBPF",
-         "bpftrace"
-      ]
-   },
-   {
-      "year": "2021",
-      "month": "05",
-      "day": "06",
-      "type": "maintainers track",
-      "title": "FalcOMG That's AWESOME",
-      "url": "https://sched.co/iE69",
-      "pitch": "Updates on everything happening in the [Falco](https://falco.org/) project, the de-facto Kubernetes threat detection engine, in 2021.",
-      "deck": "https://speakerdeck.com/leodido/falcomg-thats-awesome",
-      "youtube": {
-         "id": "KCp6vAdWOD0"
+      {
+        "name": "gh:iovisor/kubectl-trace",
+        "url": "https://github.com/iovisor/kubectl-trace",
+        "symbol": ""
+      }
+    ],
+    "conference": "Cloud_Native Rejekts NA",
+    "tags": [
+      "eBPF",
+      "Kubernetes",
+      "Cloud Native"
+    ]
+  },
+  {
+    "year": "2019",
+    "month": "10",
+    "day": "21",
+    "type": "talk",
+    "title": "Go eBPF superpowers",
+    "url": null,
+    "repositories": [
+      {
+        "name": "gh:leodido/go-ebpf-examples",
+        "url": "https://github.com/leodido/go-ebpf-examples",
+        "symbol": ""
+      }
+    ],
+    "pitch": "Write eBPF programs with Go.",
+    "deck": "https://speakerdeck.com/leodido/go-ebpf-superpowers",
+    "youtube": {
+      "id": "tywt_oFMHJE"
+    },
+    "conference": "GoLab Florence",
+    "tags": [
+      "eBPF",
+      "Go"
+    ]
+  },
+  {
+    "year": "2019",
+    "month": "09",
+    "day": "19",
+    "type": "talk",
+    "title": "Prometheus as exposition format for eBPF programs running on Kubernetes",
+    "url": "https://devopsdays.org/events/2019-istanbul/program/leonardo-di-donato/",
+    "repositories": [
+      {
+        "name": "gh:bpftools/kube-bpf",
+        "url": "https://github.com/bpftools/kube-bpf",
+        "symbol": "⎈"
+      }
+    ],
+    "pitch": "This talk exposes the idea, and a reference implementation, of using eBPF programs for generating Prometheus metrics regarding our Kubernetes cluster.",
+    "deck": "http://bit.ly/ebpf-k8s-prom-devopsdays-istanbul-2019",
+    "youtube": {
+      "id": "TekEf6eR8JI"
+    },
+    "conference": "DevOpsDays Istanbul",
+    "tags": [
+      "eBPF",
+      "Prometheus",
+      "Kubernetes"
+    ]
+  },
+  {
+    "year": "2019",
+    "month": "05",
+    "day": "19",
+    "type": "lightning talk",
+    "title": "OpenMetrics: Prometheus Unbound",
+    "url": "https://cfp.cloud-native.rejekts.io/cloud-native-rejekts-eu-2019/talk/ZJKBJX/",
+    "pitch": "The State of the Art of OpenMetrics and some fundamentals about it.",
+    "deck": "http://bit.ly/openmetrics_bcn",
+    "youtube": {
+      "id": null
+    },
+    "repositories": [],
+    "conference": "Cloud_Native Rejekts EU",
+    "tags": [
+      "Prometheus",
+      "OpenMetrics"
+    ]
+  },
+  {
+    "year": "2019",
+    "month": "05",
+    "day": "18",
+    "type": "talk",
+    "title": "Prometheus as exposition format for eBPF programs",
+    "repositories": [
+      {
+        "name": "gh:bpftools/kube-bpf",
+        "url": "https://github.com/bpftools/kube-bpf",
+        "symbol": "⎈"
+      }
+    ],
+    "url": "https://cfp.cloud-native.rejekts.io/cloud-native-rejekts-eu-2019/talk/GRK7DW/",
+    "pitch": "Because the kernel knows more than your programs.<br>So, let's inject a BPF ELF into Kubernetes encoding it in YAML file. Why not?!",
+    "deck": "http://bit.ly/prometheus_ebpf_k8s",
+    "youtube": {
+      "id": null
+    },
+    "conference": "Cloud_Native Rejekts EU",
+    "tags": [
+      "eBPF",
+      "Prometheus",
+      "Kubernetes"
+    ]
+  },
+  {
+    "year": "2019",
+    "month": "04",
+    "day": "24",
+    "type": "talk",
+    "title": "Prometheus as exposition format for eBPF programs",
+    "repositories": [
+      {
+        "name": "gh:bpftools/kube-bpf",
+        "url": "https://github.com/bpftools/kube-bpf",
+        "symbol": "⎈"
+      }
+    ],
+    "url": null,
+    "pitch": "Because the kernel knows more than your programs.<br>So, let's inject a BPF ELF into Kubernetes encoding it in YAML file. Why not?!",
+    "deck": "http://bit.ly/prometheus-openmetrics-bpf-k8s-crd",
+    "youtube": {
+      "id": "70_8YJyvwcE"
+    },
+    "conference": "CNCF Turin Meetup",
+    "tags": [
+      "eBPF",
+      "Prometheus",
+      "Kubernetes"
+    ]
+  },
+  {
+    "year": "2018",
+    "month": "10",
+    "day": "04",
+    "type": "talk",
+    "title": "From logs to metrics",
+    "repositories": [
+      {
+        "name": "gh:influxdata/go-syslog",
+        "url": "https://github.com/influxdata/go-syslog",
+        "symbol": ""
       },
-      "repositories": [
-         {
-            "name": "gh:falcosecurity/falco",
-            "url": "https://github.com/falcosecurity/falco"
-         }
-      ],
-      "conference": "KubeCon North America",
-      "tags": [
-         "Falco",
-         "Kubernetes",
-         "security",
-         "eBPF",
-         "CNCF"
-      ]
-   },
-   {
-      "year": "2020",
-      "month": "11",
-      "day": "20",
-      "type": "talk",
-      "title": "Bypass Falco",
-      "url": "https://sched.co/ekE4",
-      "pitch": "Maybe you trust it as your last line of defense in today's cloud-native environments, and as a consequence, you sleep like a log.<br>Well, I'm a Falco maintainer, and I definitely wouldn't.</p><p>During this session, we're gonna explore how to bypass Falco and leave us like sitting ducks, defenseless.",
-      "deck": "https://static.sched.com/hosted_files/kccncna20/56/Bypass%20Falco%20%5BKubeCon%20%2B%20CloudNativeCon%20NA%202020%5D.pdf",
-      "youtube": {
-         "id": "nGqWskXRSmo"
-      },
-      "repositories": [
-         {
-            "name": "gh:falcosecurity/falco",
-            "url": "https://github.com/falcosecurity/falco"
-         }
-      ],
-      "conference": "KubeCon North America",
-      "tags": [
-         "Falco",
-         "security",
-         "bypass",
-         "tracepoint",
-         "syscalls"
-      ]
-   },
-   {
-      "year": "2020",
-      "month": "10",
-      "day": "29",
-      "type": "live stream",
-      "title": "Intro to Falco",
-      "url": null,
-      "pitch": "[Falco](https://falco.org), the open-source cloud-native runtime security project, is the de facto Kubernetes threat detection engine. </p><p>During this live stream two core maintainers of Falco show how it detects unexpected application behavior and alerts on threats at runtime, even for Kubernetes.",
-      "deck": null,
-      "youtube": {
-         "id": "4jJaDf6BYJQ"
-      },
-      "repositories": [],
-      "conference": "Rawkode Live",
-      "tags": [
-         "Falco",
-         "Kubernetes",
-         "security",
-         "detection"
-      ]
-   },
-   {
-      "year": "2020",
-      "month": "09",
-      "day": "27",
-      "type": "talk",
-      "title": "Falco, runtime security analysis through syscalls",
-      "url": "https://2020.romhack.io/speakers-2020.html#didonato",
-      "pitch": "In every Linux system, we have the syscalls interface to trace what userspace processes are doing at the upper level and eventually take action.<br>Anyway, this is easier said than done. Because tracing and processing every system call in userspace results in a very unique set of challenges.</p><p>This is what [Falco](https://falco.org) does.",
-      "deck": "https://speakerdeck.com/leodido/falco-runtime-security-analysis-through-syscalls-f14e1a38-b460-410e-9eb8-73ab0262d654",
-      "youtube": {
-         "id": "8o804koab2g"
-      },
-      "repositories": [
-         {
-            "name": "gh:falcosecurity/falco",
-            "url": "https://github.com/falcosecurity/falco"
-         }
-      ],
-      "conference": "RomHack Rome",
-      "tags": [
-         "Falco",
-         "syscalls",
-         "security",
-         "detection"
-      ]
-   },
-   {
-      "year": "2020",
-      "month": "08",
-      "day": "20",
-      "type": "talk",
-      "title": "Going Beyond CI/CD with Prow",
-      "url": "https://sched.co/ZenU",
-      "pitch": "One of the most untold secrets is how hard and important is to automate the whole set of workflows around the code, not only the testing phase.</p><p>We were able to use the native Kubernetes CI/CD system - Prow - to solve CI/CD for Falco.",
-      "deck": "https://static.sched.com/hosted_files/kccnceu20/b4/Going%20Beyond%20CI_CD%20with%20Prow%20%5BKubeCon%20%2B%20CloudNativeCon%20Europe%202020%5D.pdf",
-      "youtube": {
-         "id": "qQvoImxHydk"
-      },
-      "repositories": [
-         {
-            "name": "gh:falcosecurity/test-infra",
-            "url": "https://github.com/falcosecurity/test-infra"
-         },
-         {
-            "name": "gh:k8s/test-infra/prow",
-            "url": "https://github.com/kubernetes/test-infra/tree/master/prow"
-         }
-      ],
-      "conference": "KubeCon Europe",
-      "tags": [
-         "Kubernetes",
-         "CI/CD",
-         "Prow",
-         "plugins",
-         "automation",
-         "opensource"
-      ]
-   },
-   {
-      "year": "2020",
-      "month": "08",
-      "day": "19",
-      "type": "talk",
-      "title": "Designing a gRPC Interface for Kernel Tracing with eBPF",
-      "url": "https://sched.co/Zexb",
-      "pitch": "Designing a mutually TLS authenticated API over gRPC in C/C++ to ship alerts and solve the runtime security problem.</p><p>In this talk I go through the challenges I faced with designing the interface, as well as the performance concerns with parsing millions of syscalls using eBPF over gRPC.",
-      "deck": "https://static.sched.com/hosted_files/kccnceu20/c7/Aug19_Designing_a_gRPC_Interface_for_Kernel_Tracing_with_eBPF_Leonardo_DiDonato.pdf",
-      "youtube": {
-         "id": "kjOJfNDPVSo"
-      },
-      "repositories": [
-         {
-            "name": "gh:falcosecurity/falco",
-            "url": "https://github.com/falcosecurity/falco"
-         },
-         {
-            "name": "gh:grpc/grpc",
-            "url": "https://github.com/grpc/grpc"
-         }
-      ],
-      "conference": "KubeCon Europe",
-      "tags": [
-         "Falco",
-         "gRPC",
-         "tracing",
-         "C++",
-         "security"
-      ]
-   },
-   {
-      "year": "2020",
-      "month": "06",
-      "day": "20",
-      "type": "talk",
-      "title": "Falco, runtime security analysis through syscalls",
-      "url": null,
-      "pitch": "In every Linux system, we have the syscalls interface to trace what userspace processes are doing at the upper level and eventually take action.<br>Anyway, this is easier said than done. Because tracing and processing every system call in userspace results in a very unique set of challenges.</p><p>This is what [Falco](https://falco.org) does.",
-      "deck": "https://speakerdeck.com/leodido/falco-runtime-security-analysis-through-syscalls",
-      "youtube": {
-         "id": "SzqgcT_-3Z0"
-      },
-      "repositories": [
-         {
-            "name": "gh:falcosecurity/falco",
-            "url": "https://github.com/falcosecurity/falco"
-         }
-      ],
-      "conference": "BSides Athens",
-      "tags": [
-         "Falco",
-         "syscalls",
-         "security",
-         "detection"
-      ]
-   },
-   {
-      "year": "2020",
-      "month": "02",
-      "day": "18",
-      "type": "podcast",
-      "title": "eBPF & Falco",
-      "url": null,
-      "pitch": "We dive into the Linux kernel this week with guest [Leonardo Di Donato](https://twitter.com/leodido), Open Source engineer. Leonardo works full-time on the [Falco](https://falco.org) project, a runtime security engine that listens to the Linux kernel using eBPF - the extended Berkeley Packet Filter.</p><p>Leonardo tells the hosts about the architecture of eBPF, how he has used it before and now, and what's coming up for Falco.",
-      "deck": null,
-      "spotify": {
-         "id": "3h4iid9BViqm0DGMlTq3qt",
-         "start": 453
-      },
-      "repositories": [],
-      "conference": "Kubernetes Podcast from Google",
-      "tags": [
-         "Falco",
-         "Kubernetes",
-         "security",
-         "eBPF"
-      ]
-   },
-   {
-      "year": "2019",
-      "month": "11",
-      "day": "17",
-      "type": "talk",
-      "title": "Cloud Native eBPF instrumentation",
-      "url": "https://cfp.cloud-native.rejekts.io/cloud-native-rejekts-na-2019/talk/ATPJSX/",
-      "pitch": "How to use eBPF for creating tools aware of both the kernel and the Kubernetes layers.",
-      "deck": "https://speakerdeck.com/leodido/cloud-native-ebpf-instrumentation",
-      "youtube": {
-         "id": null
-      },
-      "repositories": [
-         {
-            "name": "gh:bpftools/kube-bpf",
-            "url": "https://github.com/bpftools/kube-bpf",
-            "symbol": "⎈"
-         },
-         {
-            "name": "gh:iovisor/kubectl-trace",
-            "url": "https://github.com/iovisor/kubectl-trace",
-            "symbol": ""
-         }
-      ],
-      "conference": "Cloud_Native Rejekts NA",
-      "tags": [
-         "eBPF",
-         "Kubernetes",
-         "Cloud Native"
-      ]
-   },
-   {
-      "year": "2019",
-      "month": "10",
-      "day": "21",
-      "type": "talk",
-      "title": "Go eBPF superpowers",
-      "url": null,
-      "repositories": [
-         {
-            "name": "gh:leodido/go-ebpf-examples",
-            "url": "https://github.com/leodido/go-ebpf-examples",
-            "symbol": ""
-         }
-      ],
-      "pitch": "Write eBPF programs with Go.",
-      "deck": "https://speakerdeck.com/leodido/go-ebpf-superpowers",
-      "youtube": {
-         "id": "tywt_oFMHJE"
-      },
-      "conference": "GoLab Florence",
-      "tags": [
-         "eBPF",
-         "Go"
-      ]
-   },
-   {
-      "year": "2019",
-      "month": "09",
-      "day": "19",
-      "type": "talk",
-      "title": "Prometheus as exposition format for eBPF programs running on Kubernetes",
-      "url": "https://devopsdays.org/events/2019-istanbul/program/leonardo-di-donato/",
-      "repositories": [
-         {
-            "name": "gh:bpftools/kube-bpf",
-            "url": "https://github.com/bpftools/kube-bpf",
-            "symbol": "⎈"
-         }
-      ],
-      "pitch": "This talk exposes the idea, and a reference implementation, of using eBPF programs for generating Prometheus metrics regarding our Kubernetes cluster.",
-      "deck": "http://bit.ly/ebpf-k8s-prom-devopsdays-istanbul-2019",
-      "youtube": {
-         "id": "TekEf6eR8JI"
-      },
-      "conference": "DevOpsDays Istanbul",
-      "tags": [
-         "eBPF",
-         "Prometheus",
-         "Kubernetes"
-      ]
-   },
-   {
-      "year": "2019",
-      "month": "05",
-      "day": "19",
-      "type": "lightning talk",
-      "title": "OpenMetrics: Prometheus Unbound",
-      "url": "https://cfp.cloud-native.rejekts.io/cloud-native-rejekts-eu-2019/talk/ZJKBJX/",
-      "pitch": "The State of the Art of OpenMetrics and some fundamentals about it.",
-      "deck": "http://bit.ly/openmetrics_bcn",
-      "youtube": {
-         "id": null
-      },
-      "repositories": [],
-      "conference": "Cloud_Native Rejekts EU",
-      "tags": [
-         "Prometheus",
-         "OpenMetrics"
-      ]
-   },
-   {
-      "year": "2019",
-      "month": "05",
-      "day": "18",
-      "type": "talk",
-      "title": "Prometheus as exposition format for eBPF programs",
-      "repositories": [
-         {
-            "name": "gh:bpftools/kube-bpf",
-            "url": "https://github.com/bpftools/kube-bpf",
-            "symbol": "⎈"
-         }
-      ],
-      "url": "https://cfp.cloud-native.rejekts.io/cloud-native-rejekts-eu-2019/talk/GRK7DW/",
-      "pitch": "Because the kernel knows more than your programs.<br>So, let's inject a BPF ELF into Kubernetes encoding it in YAML file. Why not?!",
-      "deck": "http://bit.ly/prometheus_ebpf_k8s",
-      "youtube": {
-         "id": null
-      },
-      "conference": "Cloud_Native Rejekts EU",
-      "tags": [
-         "eBPF",
-         "Prometheus",
-         "Kubernetes"
-      ]
-   },
-   {
-      "year": "2019",
-      "month": "04",
-      "day": "24",
-      "type": "talk",
-      "title": "Prometheus as exposition format for eBPF programs",
-      "repositories": [
-         {
-            "name": "gh:bpftools/kube-bpf",
-            "url": "https://github.com/bpftools/kube-bpf",
-            "symbol": "⎈"
-         }
-      ],
-      "url": null,
-      "pitch": "Because the kernel knows more than your programs.<br>So, let's inject a BPF ELF into Kubernetes encoding it in YAML file. Why not?!",
-      "deck": "http://bit.ly/prometheus-openmetrics-bpf-k8s-crd",
-      "youtube": {
-         "id": "70_8YJyvwcE"
-      },
-      "conference": "CNCF Turin Meetup",
-      "tags": [
-         "eBPF",
-         "Prometheus",
-         "Kubernetes"
-      ]
-   },
-   {
-      "year": "2018",
-      "month": "10",
-      "day": "04",
-      "type": "talk",
-      "title": "From logs to metrics",
-      "repositories": [
-         {
-            "name": "gh:influxdata/go-syslog",
-            "url": "https://github.com/influxdata/go-syslog",
-            "symbol": ""
-         },
-         {
-            "name": "gh:leodido/logs2metrics-talk",
-            "url": "https://github.com/leodido/logs2metrics-talk"
-         }
-      ],
-      "url": null,
-      "pitch": "Extracting valuable info from logs is possible. Anyway, it can be a time consuming activity.</p><p>How to parse Syslog messages in no time? Then, how to ingest them into a time-series database?",
-      "deck": "http://bit.ly/logs-2-metrics-influx-code",
-      "conference": "Kubernetes & Cloud-Native Milano",
-      "tags": [
-         "InfluxDB",
-         "Telegraf",
-         "Syslog",
-         "Ragel",
-         "Go",
-         "RFC5424",
-         "parsing"
-      ]
-   },
-   {
-      "year": "2018",
-      "month": "02",
-      "day": "09",
-      "type": "talk",
-      "title": "First dive in the cryptoverse",
-      "url": null,
-      "pitch": "My take on the digital currency revolution in front of a private audience.",
-      "deck": "http://bit.ly/cryptoversetalk",
-      "repositories": [],
-      "conference": "Private Event",
-      "tags": [
-         "Cryptocurrencies"
-      ]
-   }
+      {
+        "name": "gh:leodido/logs2metrics-talk",
+        "url": "https://github.com/leodido/logs2metrics-talk"
+      }
+    ],
+    "url": null,
+    "pitch": "Extracting valuable info from logs is possible. Anyway, it can be a time consuming activity.</p><p>How to parse Syslog messages in no time? Then, how to ingest them into a time-series database?",
+    "deck": "http://bit.ly/logs-2-metrics-influx-code",
+    "conference": "Kubernetes & Cloud-Native Milano",
+    "tags": [
+      "InfluxDB",
+      "Telegraf",
+      "Syslog",
+      "Ragel",
+      "Go",
+      "RFC5424",
+      "parsing"
+    ]
+  },
+  {
+    "year": "2018",
+    "month": "02",
+    "day": "09",
+    "type": "talk",
+    "title": "First dive in the cryptoverse",
+    "url": null,
+    "pitch": "My take on the digital currency revolution in front of a private audience.",
+    "deck": "http://bit.ly/cryptoversetalk",
+    "repositories": [],
+    "conference": "Private Event",
+    "tags": [
+      "Cryptocurrencies"
+    ]
+  }
 ]
