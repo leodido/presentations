@@ -9,8 +9,7 @@
     "repositories": [
       {
         "name": "gh:elastic/bpfcov",
-        "url": "https://github.com/elastic/bpfcov",
-        "symbol": "🐝"
+        "url": "https://github.com/elastic/bpfcov"
       }
     ],
     "pitch": "eBPF is fastly becoming the first choice for implementing tracing and security-critical applications and software.</p><p>Yet, its ecosystem lacks tooling to make developers' life easier.</p><p>Join this talk to get to know [bpfcov](https://github.com/elastic/bpfcov): an open-source tool I wrote that uses the LLVM pass infrastructure to instrument your eBPF programs to collect coverage data while they run in the eBPF VM in the Linux kernel.",
@@ -64,8 +63,7 @@
     "repositories": [
       {
         "name": "gh:iovisor/kubectl-trace",
-        "url": "https://github.com/iovisor/kubectl-trace",
-        "symbol": ""
+        "url": "https://github.com/iovisor/kubectl-trace"
       }
     ],
     "pitch": "The [kubectl-trace](https://github.com/iovisor/kubectl-trace) project is a kubectl plugin that makes our lives easier, allowing us to use BPF programs against our Kubernetes clusters.</p><p>You are 5 minutes away from starting scheduling your [bpftrace](https://github.com/iovisor/bpftrace) programs (or whatever BPF frontend language) against your clusters.",
@@ -314,8 +312,7 @@
       },
       {
         "name": "gh:iovisor/kubectl-trace",
-        "url": "https://github.com/iovisor/kubectl-trace",
-        "symbol": ""
+        "url": "https://github.com/iovisor/kubectl-trace"
       }
     ],
     "conference": "Cloud_Native Rejekts NA",
