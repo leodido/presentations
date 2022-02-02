@@ -332,8 +332,7 @@
     "repositories": [
       {
         "name": "gh:leodido/go-ebpf-examples",
-        "url": "https://github.com/leodido/go-ebpf-examples",
-        "symbol": ""
+        "url": "https://github.com/leodido/go-ebpf-examples"
       }
     ],
     "pitch": "Write eBPF programs with Go.",
@@ -453,8 +452,7 @@
     "repositories": [
       {
         "name": "gh:influxdata/go-syslog",
-        "url": "https://github.com/influxdata/go-syslog",
-        "symbol": ""
+        "url": "https://github.com/influxdata/go-syslog"
       },
       {
         "name": "gh:leodido/logs2metrics-talk",
