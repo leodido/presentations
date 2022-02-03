@@ -683,12 +683,12 @@ Who wanna read LLVM IR for eBPF with me? 😎
 
 # Resources
 
-- Blog post: [Coverage for eBPF programs]()
+- Blog post: [Coverage for eBPF programs](https://ela.st/blog-bpfcov)
 - [Writing an LLVM pass](https://llvm.org/docs/WritingAnLLVMPass.html)
 - The [Coverage Mapping](https://llvm.org/docs/CoverageMappingFormat.html) format
 - [Dissecting the coverage mapping sample](https://llvm.org/docs/CoverageMappingFormat.html#dissecting-the-sample)
 - The encoding of the coverage mapping values: [LEB128](https://en.wikipedia.org/wiki/LEB128)
-- [Demystifying the profraw format](https://leodido.com/demystifying-profraw-format)
+- [Demystifying the profraw format](https://leodido.dev/demystifying-profraw/)
 - The functions writing the `profraw` file: [lprofWriteData()](https://github.com/llvm/llvm-project/blob/e356027016c6365b3d8924f54c33e2c63d931492/compiler-rt/lib/profile/InstrProfilingWriter.c#L241), [lprofWriteDataImpl()](https://github.com/llvm/llvm-project/blob/e356027016c6365b3d8924f54c33e2c63d931492/compiler-rt/lib/profile/InstrProfilingWriter.c#L257)
 - Source code (LLVM) emitting `__covrec_*` constants: [CodeGen/CoverageMappingGen.cpp](https://github.com/llvm/llvm-project/blob/d0ac215dd5496a44ce8a6660378ea40a6e1c148d/clang/lib/CodeGen/CoverageMappingGen.cpp#L1589)
 - Calls to `CoverageMappingModuleGen` in LLVM: [CodeGenAction::CreateASTConsumer](https://github.com/llvm/llvm-project/blob/063c2f89aa7f5b0b61a63d639d8124035f26935c/clang/lib/CodeGen/CodeGenAction.cpp#L1016), [CodeGenModule::CodeGenModule](https://github.com/llvm/llvm-project/blob/de34a940ae72dfa6425a025538484f9505ca1d42/clang/lib/CodeGen/CodeGenModule.cpp#L183)
