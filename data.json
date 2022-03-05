@@ -1,4 +1,34 @@
 [
+ {
+    "year": "2022",
+    "month": "03",
+    "day": "04",
+    "type": "live stream",
+    "title": "Code Coverage for eBPF programs",
+    "url": null,
+    "pitch": "[Leo Di Donato](https://twitter.com/leodido) demonstrates [bpfcov](https://github.com/elastic/bpfcov) for generating source-based code coverage reports for eBPF programs running in the Linux kernel, with [Liz Rice](https://twitter.com/lizrice).",
+    "deck": null,
+    "youtube": {
+      "id": "wul6NBU23zY"
+    },
+    "repositories": [
+      {
+        "name": "gh:elastic/bpfcov",
+        "url": "https://github.com/elastic/bpfcov"
+      },
+      {
+        "name": "gh:isovalent/eCHO/episodes/038",
+        "url": ""
+      }
+    ],
+    "conference": "eCHO Livestream",
+    "tags": [
+      "LLVM",
+      "Clang",
+      "coverage",
+      "eBPF"
+    ]
+  },
   {
     "year": "2022",
     "month": "02",
@@ -20,7 +50,7 @@
     "conference": "FOSDEM",
     "tags": [
       "LLVM",
-      "clang",
+      "Clang",
       "coverage",
       "eBPF"
     ]
