@@ -18,10 +18,10 @@
       },
       {
         "name": "gh:isovalent/eCHO/episodes/038",
-        "url": ""
+        "url": "https://github.com/isovalent/eCHO/tree/main/episodes/038"
       }
     ],
-    "conference": "eCHO Livestream",
+    "conference": "eCHO Livestream #038",
     "tags": [
       "LLVM",
       "Clang",
