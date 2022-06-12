@@ -44,11 +44,10 @@
     ],
     "pitch": "eBPF is fastly becoming the first choice for implementing tracing and security-critical applications and software.</p><p>Yet, its ecosystem lacks tooling to make developers' life easier.</p><p>Join this talk to get to know [bpfcov](https://github.com/elastic/bpfcov): an open-source tool I wrote that uses the LLVM pass infrastructure to instrument your eBPF programs to collect coverage data while they run in the eBPF VM in the Linux kernel.",
     "deck": "https://speakerdeck.com/leodido/coverage-for-ebpf-programs",
-    "youtube": {
-      "id": null
+    "video": {
+      "mp4": "https://video.fosdem.org/2022/D.llvm/llvm_ebpf.mp4",
+      "webm": "https://video.fosdem.org/2022/D.llvm/llvm_ebpf.webm",
     },
-    "mp4": "https://video.fosdem.org/2022/D.llvm/llvm_ebpf.mp4",
-    "webm": "https://video.fosdem.org/2022/D.llvm/llvm_ebpf.webm",
     "conference": "FOSDEM",
     "tags": [
       "LLVM",
