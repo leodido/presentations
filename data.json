@@ -47,6 +47,8 @@
     "youtube": {
       "id": null
     },
+    "mp4": "https://video.fosdem.org/2022/D.llvm/llvm_ebpf.mp4",
+    "webm": "https://video.fosdem.org/2022/D.llvm/llvm_ebpf.webm",
     "conference": "FOSDEM",
     "tags": [
       "LLVM",
