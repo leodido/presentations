@@ -46,7 +46,7 @@
     "deck": "https://speakerdeck.com/leodido/coverage-for-ebpf-programs",
     "video": {
       "mp4": "https://video.fosdem.org/2022/D.llvm/llvm_ebpf.mp4",
-      "webm": "https://video.fosdem.org/2022/D.llvm/llvm_ebpf.webm",
+      "webm": "https://video.fosdem.org/2022/D.llvm/llvm_ebpf.webm"
     },
     "conference": "FOSDEM",
     "tags": [
