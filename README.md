@@ -6,6 +6,16 @@ You can find my decks [here too](https://speakerdeck.com/leodido).
 
 For questions and engagements feel free to ping me at [@leodido](https://twitter.com/leodido).
 
+<details open><summary>2026</summary>
+<p>
+
+| Date       | Title                                                                                                 |                                            Slides                                            |                    Video                    | Conference                                          | Type |
+| ---------- | ----------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------: | :-----------------------------------------: | --------------------------------------------------- | ---- |
+| 2026.03.03 | [Claude Code bypasses its own security, then meets the Ona kernel](https://ona.com/stories/how-claude-code-escapes-its-own-denylist-and-sandbox) | :heavy_multiplication_x: | [Watch](https://www.youtube.com/watch?v=kMoh4tCHyZA) :vhs: | | Demo |
+
+</p>
+</details>
+
 <details open><summary>2022</summary>
 <p>
 

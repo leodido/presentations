@@ -1,5 +1,31 @@
 [
  {
+    "year": "2026",
+    "month": "03",
+    "day": "03",
+    "type": "demo",
+    "title": "Claude Code bypasses its own security, then meets the Ona kernel",
+    "url": "https://ona.com/stories/how-claude-code-escapes-its-own-denylist-and-sandbox",
+    "pitch": "Every major runtime security tool identifies executables by path, not content. AI agents can reason about and bypass path-based restrictions. This demo shows Claude Code bypassing its own denylist and sandbox, then being stopped by [Veto X](https://ona.com/docs/ona/organizations/policies/executable-deny-list), a content-addressable kernel enforcement engine that uses SHA-256 hashing at the BPF LSM layer to identify binaries by content.",
+    "deck": null,
+    "youtube": {
+      "id": "kMoh4tCHyZA",
+      "playlist": "PL-YnLgW35W60wX9lhu6-a8ln4I9yfT1ug"
+    },
+    "repositories": [],
+    "conference": null,
+    "tags": [
+      "kernel",
+      "eBPF",
+      "security",
+      "BPF LSM",
+      "AI agents",
+      "Veto",
+      "execution",
+      "content-addressable"
+    ]
+  },
+  {
     "year": "2022",
     "month": "03",
     "day": "04",
